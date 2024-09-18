@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "@pandacss", "@pandabox/prettier-plugin"],
   "rules": {
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],
@@ -57,6 +57,13 @@
     "brace-style": "error",
     "no-whitespace-before-property": "error",
     "switch-colon-spacing": "error",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "pandaFirstProps": ["as", "className", "layerStyle", "textStyle"],
+    "pandaLastProps": [],
+    "pandaOnlyComponents": false,
+    "pandaOnlyIncluded": false,
+    "pandaStylePropsFirst": false,
+    "pandaSortOtherProps": false,
+    "pandaFunctions": []
   }
 }
