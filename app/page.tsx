@@ -5,6 +5,9 @@ export default function Home() {
   return (
     <main
       className={vstack({
+        bgGradient: 'to-b',
+        gradientFrom: 'nyanza.800',
+        gradientTo: 'platinum.dark',
         gap: 4,
         h: 'screen',
         justifyContent: 'center',
@@ -12,6 +15,7 @@ export default function Home() {
     >
       <h1
         className={css({
+          color: 'nyanza.200',
           fontSize: '6xl',
           fontWeight: 'bold',
         })}
@@ -20,6 +24,7 @@ export default function Home() {
       </h1>
       <h2
         className={css({
+          color: 'platinum.light',
           fontSize: '3xl',
         })}
       >
