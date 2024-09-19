@@ -3,6 +3,8 @@ import {hstack, vstack} from '@/styled-system/patterns';
 import Image from 'next/image';
 
 export default function Home() {
+  const lines = new Array(20).fill(0);
+
   return (
     <main
       className={vstack({
@@ -12,6 +14,8 @@ export default function Home() {
         gap: 4,
         h: 'screen',
         justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
       })}
     >
       <div
@@ -63,6 +67,56 @@ export default function Home() {
       >
         Mesurez votre culture et montrez qui est le plus fort !
       </h2>
+      <div
+        id='lines-left'
+        className={vstack({
+          position: 'absolute',
+          bottom: '-10vw',
+          left: '-15vw',
+          gap: 3.5,
+          h: 'fit-content',
+          rotate: '50deg',
+          w: 'fit',
+        })}
+      >
+        {lines.map((_, index: number) => {
+          return (
+            <div
+              key={index}
+              className={css({
+                bg: 'nyanza.200',
+                h: 0.4,
+                w: '50vw',
+              })}
+            />
+          );
+        })}
+      </div>
+      <div
+        id='lines-right'
+        className={vstack({
+          position: 'absolute',
+          bottom: '-10vw',
+          right: '-15vw',
+          gap: 3.5,
+          h: 'fit-content',
+          rotate: '-50deg',
+          w: 'fit',
+        })}
+      >
+        {lines.map((_, index: number) => {
+          return (
+            <div
+              key={index}
+              className={css({
+                bg: 'nyanza.200',
+                h: 0.4,
+                w: '50vw',
+              })}
+            />
+          );
+        })}
+      </div>
     </main>
   );
 }
