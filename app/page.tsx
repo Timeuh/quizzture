@@ -1,45 +1,8 @@
-'use client';
-
-import {socket} from '@/socket';
 import {css} from '@/styled-system/css';
-import {vstack} from '@/styled-system/patterns';
-import {useEffect, useState} from 'react';
+import {hstack, vstack} from '@/styled-system/patterns';
+import Image from 'next/image';
 
 export default function Home() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [transport, setTransport] = useState('N/A');
-
-  useEffect(() => {
-    if (socket.connected) {
-      onConnect();
-    }
-
-    function onConnect() {
-      setIsConnected(true);
-      setTransport(socket.io.engine.transport.name);
-      console.log('Utilisateur connecté au WebSocket');
-
-      socket.io.engine.on('upgrade', (transport) => {
-        setTransport(transport.name);
-      });
-
-      socket.emit('user_connected', {message: 'Un nouvel utilisateur est connecté'});
-    }
-
-    function onDisconnect() {
-      setIsConnected(false);
-      setTransport('N/A');
-    }
-
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-
-    return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-    };
-  }, []);
-
   return (
     <main
       className={vstack({
@@ -51,19 +14,51 @@ export default function Home() {
         justifyContent: 'center',
       })}
     >
-      <h1
-        className={css({
-          color: 'nyanza.200',
-          fontSize: '6xl',
-          fontWeight: 'bold',
+      <div
+        className={hstack({
+          gap: 8,
+          justifyContent: 'center',
         })}
       >
-        QuizzTure
-      </h1>
+        <Image
+          src={'/images/logo.png'}
+          alt={'quizz logo'}
+          width={0}
+          height={0}
+          sizes={'100vw'}
+          className={css({
+            h: 'auto',
+            rotate: '-20deg',
+            w: 36,
+          })}
+        />
+        <h1
+          className={css({
+            color: 'nyanza.200',
+            fontSize: '8xl',
+            fontWeight: 'bold',
+          })}
+        >
+          QuizzTure
+        </h1>
+        <Image
+          src={'/images/logo.png'}
+          alt={'quizz logo'}
+          width={0}
+          height={0}
+          sizes={'100vw'}
+          className={css({
+            h: 'auto',
+            rotate: '20deg',
+            w: 36,
+          })}
+        />
+      </div>
       <h2
         className={css({
           color: 'platinum.light',
           fontSize: '3xl',
+          fontWeight: 'bold',
         })}
       >
         Mesurez votre culture et montrez qui est le plus fort !
