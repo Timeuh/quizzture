@@ -86,6 +86,7 @@ export default function Home() {
             justifyContent: 'center',
             p: 2,
             w: '20vw',
+            cursor: 'pointer',
           })}
         >
           <Gamepad
@@ -107,6 +108,7 @@ export default function Home() {
             justifyContent: 'center',
             p: 2,
             w: '20vw',
+            cursor: 'pointer',
           })}
         >
           <Join
