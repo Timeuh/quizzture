@@ -18,8 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@app/*": ["./app/*"],
+      "@styles/*": ["./styled-system/*"],
       "@utils/*": ["./app/utils/*"],
       "@appTypes/*": ["./app/utils/types/*"],
       "@constants/*": ["./app/utils/constants/*"],
