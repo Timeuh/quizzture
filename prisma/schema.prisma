@@ -6,3 +6,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model user {
+  email           String @id @unique
+  password        String
+  highest_score   Int
+  victories       Int
+  victories_chain Int
+  victories_three Int
+  games           Int
+  games_chain     Int
+  games_three     Int
+}
+
+model category {
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  question question[]
+}
+
+model question {
+  id          Int      @id @default(autoincrement())
+  heading     String
+  answer      String
+  category    category @relation(fields: [category_id], references: [id])
+  category_id Int
+}
