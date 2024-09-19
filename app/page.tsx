@@ -1,6 +1,6 @@
-import {css} from '@/styled-system/css';
-import {hstack, vstack} from '@/styled-system/patterns';
 import Image from 'next/image';
+import {hstack, vstack} from '@styles/patterns';
+import {css} from '@styles/css';
 import Gamepad from '@components/icons/Gamepad';
 import Join from '@components/icons/Join';
 
