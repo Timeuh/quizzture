@@ -1,0 +1,29 @@
+services:
+  app:
+    container_name: quizzture-app
+    build:
+      context: .
+      target: dev
+    restart: unless-stopped
+    env_file: .env.local
+    volumes:
+      - .:/app
+    ports:
+      - "57001:3000"
+    working_dir: /app
+
+  database:
+    image: postgres
+    container_name: quizzture-database
+    restart: unless-stopped
+    ports:
+      - "57032:5432"
+    env_file:
+      - .env.local
+
+  adminer:
+    image: adminer
+    container_name: quizzture-adminer
+    restart: unless-stopped
+    ports:
+      - "57080:8080"
