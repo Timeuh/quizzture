@@ -1,6 +1,8 @@
 import {css} from '@/styled-system/css';
 import {hstack, vstack} from '@/styled-system/patterns';
 import Image from 'next/image';
+import Gamepad from '@components/icons/Gamepad';
+import Join from '@components/icons/Join';
 
 export default function Home() {
   const lines = new Array(20).fill(0);
@@ -67,6 +69,55 @@ export default function Home() {
       >
         Mesurez votre culture et montrez qui est le plus fort !
       </h2>
+      <div
+        className={vstack({
+          pt: 16,
+          gap: 8,
+          justifyContent: 'center',
+        })}
+      >
+        <button
+          className={hstack({
+            bg: 'nyanza.200',
+            borderRadius: 'sm',
+            color: 'platinum.dark',
+            fontSize: '2xl',
+            gap: 4,
+            justifyContent: 'center',
+            p: 2,
+            w: '20vw',
+          })}
+        >
+          <Gamepad
+            className={css({
+              h: 'auto',
+              w: 8,
+            })}
+          />
+          Créer une partie
+        </button>
+        <button
+          className={hstack({
+            borderRadius: 'sm',
+            border: '2px solid',
+            borderColor: 'nyanza.200',
+            color: 'platinum.light',
+            fontSize: '2xl',
+            gap: 4,
+            justifyContent: 'center',
+            p: 2,
+            w: '20vw',
+          })}
+        >
+          <Join
+            className={css({
+              h: 'auto',
+              w: 6,
+            })}
+          />
+          Rejoindre une partie
+        </button>
+      </div>
       <div
         id='lines-left'
         className={vstack({
