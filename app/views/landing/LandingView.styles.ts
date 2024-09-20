@@ -48,7 +48,10 @@ export const vLanding_buttonsContainer = vstack({
 });
 
 export const vLanding_playButton = hstack({
-  bg: 'nyanza.200',
+  bg: {
+    base: 'nyanza.200',
+    _hover: 'nyanza.main',
+  },
   borderRadius: 'sm',
   color: 'platinum.dark',
   fontSize: '2xl',
@@ -57,6 +60,7 @@ export const vLanding_playButton = hstack({
   p: 2,
   w: '20vw',
   cursor: 'pointer',
+  transition: 'background-color 0.5s',
 });
 
 export const vLanding_gamepad = css({
@@ -67,14 +71,21 @@ export const vLanding_gamepad = css({
 export const vLanding_joinButton = hstack({
   borderRadius: 'sm',
   border: '2px solid',
-  borderColor: 'nyanza.200',
-  color: 'platinum.light',
+  borderColor: {
+    base: 'nyanza.200',
+    _hover: 'nyanza.main',
+  },
+  color: {
+    base: 'platinum.light',
+    _hover: 'nyanza.light',
+  },
   fontSize: '2xl',
   gap: 4,
   justifyContent: 'center',
   p: 2,
   w: '20vw',
   cursor: 'pointer',
+  transition: 'all 0.5s',
 });
 
 export const vLanding_join = css({

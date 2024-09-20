@@ -3,6 +3,7 @@ import Image from 'next/image';
 import {
   cNavbar_accountContainer,
   cNavbar_createAccountButton,
+  cNavbar_loginButton,
   cNavbar_logo,
   cNavbar_navbar,
   cNavbar_title,
@@ -23,7 +24,9 @@ export default function Navbar() {
         />
       </Link>
       <div className={cNavbar_accountContainer}>
-        <Link href={'/login'}>se connecter</Link>
+        <Link href={'/login'} className={cNavbar_loginButton}>
+          se connecter
+        </Link>
         <Link href={'/register'} className={cNavbar_createAccountButton}>
           créer un compte
         </Link>

@@ -34,7 +34,19 @@ export const cNavbar_accountContainer = hstack({
 export const cNavbar_createAccountButton = css({
   p: 1,
   px: 2,
-  bg: 'nyanza.200',
+  bg: {
+    base: 'nyanza.200',
+    _hover: 'platinum.light',
+  },
   color: 'platinum.dark',
   borderRadius: 'md',
+  transition: 'background-color 0.5s',
+});
+
+export const cNavbar_loginButton = css({
+  color: {
+    base: 'platinum.light',
+    _hover: 'nyanza.200',
+  },
+  transition: 'all 0.5s',
 });
