@@ -1,4 +1,4 @@
-import {cLines_container, cLines_line} from '@components/home/lines/Lines.styles';
+import {cLines_container, cLines_line} from '@components/lines/Lines.styles';
 
 type Props = {
   direction: 'left' | 'right';

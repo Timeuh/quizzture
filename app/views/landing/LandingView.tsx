@@ -14,7 +14,7 @@ import {
   vLanding_titleContainer,
 } from './LandingView.styles';
 import Image from 'next/image';
-import Lines from '@components/home/lines/Lines';
+import Lines from '@components/lines/Lines';
 
 export default function LandingView() {
   return (
