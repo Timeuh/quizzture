@@ -1,7 +1,5 @@
 import Gamepad from '@components/icons/Gamepad';
 import Join from '@components/icons/Join';
-import {css} from '@styles/css';
-import {vstack} from '@styles/patterns';
 import {
   vLanding_buttonsContainer,
   vLanding_gamepad,
@@ -16,10 +14,9 @@ import {
   vLanding_titleContainer,
 } from './LandingView.styles';
 import Image from 'next/image';
+import Lines from '@components/home/lines/Lines';
 
 export default function LandingView() {
-  const lines = new Array(20).fill(0);
-
   return (
     <main className={vLanding_landing}>
       <div className={vLanding_titleContainer}>
@@ -52,56 +49,8 @@ export default function LandingView() {
           Rejoindre une partie
         </button>
       </div>
-      <div
-        id='lines-left'
-        className={vstack({
-          position: 'absolute',
-          bottom: '-10vw',
-          left: '-15vw',
-          gap: 3.5,
-          h: 'fit-content',
-          rotate: '50deg',
-          w: 'fit',
-        })}
-      >
-        {lines.map((_, index: number) => {
-          return (
-            <div
-              key={index}
-              className={css({
-                bg: 'nyanza.200',
-                h: 0.4,
-                w: '50vw',
-              })}
-            />
-          );
-        })}
-      </div>
-      <div
-        id='lines-right'
-        className={vstack({
-          position: 'absolute',
-          bottom: '-10vw',
-          right: '-15vw',
-          gap: 3.5,
-          h: 'fit-content',
-          rotate: '-50deg',
-          w: 'fit',
-        })}
-      >
-        {lines.map((_, index: number) => {
-          return (
-            <div
-              key={index}
-              className={css({
-                bg: 'nyanza.200',
-                h: 0.4,
-                w: '50vw',
-              })}
-            />
-          );
-        })}
-      </div>
+      <Lines direction={'left'} />
+      <Lines direction={'right'} />
     </main>
   );
 }
