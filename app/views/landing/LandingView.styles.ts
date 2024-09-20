@@ -1,7 +1,7 @@
 import {css} from '@styles/css';
 import {hstack, vstack} from '@styles/patterns';
 
-const vLanding_landing = vstack({
+export const vLanding_landing = vstack({
   bgGradient: 'to-b',
   gradientFrom: 'nyanza.800',
   gradientTo: 'platinum.dark',
@@ -12,42 +12,42 @@ const vLanding_landing = vstack({
   overflow: 'hidden',
 });
 
-const vLanding_titleContainer = hstack({
+export const vLanding_titleContainer = hstack({
   gap: 8,
   justifyContent: 'center',
 });
 
-const vLanding_leftLogo = css({
+export const vLanding_leftLogo = css({
   h: 'auto',
   rotate: '-20deg',
   w: 36,
 });
 
-const vLanding_rightLogo = css({
+export const vLanding_rightLogo = css({
   h: 'auto',
   rotate: '20deg',
   w: 36,
 });
 
-const vLanding_title = css({
+export const vLanding_title = css({
   color: 'nyanza.200',
   fontSize: '8xl',
   fontWeight: 'bold',
 });
 
-const vLanding_subtitle = css({
+export const vLanding_subtitle = css({
   color: 'platinum.light',
   fontSize: '3xl',
   fontWeight: 'bold',
 });
 
-const vLanding_buttonsContainer = vstack({
+export const vLanding_buttonsContainer = vstack({
   pt: 16,
   gap: 8,
   justifyContent: 'center',
 });
 
-const vLanding_playButton = hstack({
+export const vLanding_playButton = hstack({
   bg: 'nyanza.200',
   borderRadius: 'sm',
   color: 'platinum.dark',
@@ -59,12 +59,12 @@ const vLanding_playButton = hstack({
   cursor: 'pointer',
 });
 
-const vLanding_gamepad = css({
+export const vLanding_gamepad = css({
   h: 'auto',
   w: 8,
 });
 
-const vLanding_joinButton = hstack({
+export const vLanding_joinButton = hstack({
   borderRadius: 'sm',
   border: '2px solid',
   borderColor: 'nyanza.200',
@@ -77,21 +77,7 @@ const vLanding_joinButton = hstack({
   cursor: 'pointer',
 });
 
-const vLanding_join = css({
+export const vLanding_join = css({
   h: 'auto',
   w: 8,
 });
-
-export {
-  vLanding_landing,
-  vLanding_titleContainer,
-  vLanding_leftLogo,
-  vLanding_rightLogo,
-  vLanding_title,
-  vLanding_subtitle,
-  vLanding_buttonsContainer,
-  vLanding_playButton,
-  vLanding_gamepad,
-  vLanding_joinButton,
-  vLanding_join,
-};
