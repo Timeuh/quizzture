@@ -28,6 +28,7 @@ export default defineConfig({
           },
           platinum: {
             light: {value: '#F9FAF9'},
+            light_25: {value: 'rgba(249,250,249, 0.25)'},
             200: {value: '#ECEFEC'},
             300: {value: '#DADDDA'},
             400: {value: '#D2D5D2'},
