@@ -1,3 +1,4 @@
+import GoogleRegister from '../../components/google_register/GoogleRegister';
 import RegisterForm from '../../components/register_form/RegisterForm';
 import {
   vRegister_register,
@@ -11,7 +12,7 @@ export default function RegisterView() {
   return (
     <main className={vRegister_register}>
       <h1 className={vRegister_title}>Inscrivez-vous sur QuizzTure !</h1>
-      <h2>Google</h2>
+      <GoogleRegister />
       <div className={vRegister_separatorContainer}>
         <div className={vRegister_separator} />
         <h2 className={vRegister_separatorText}>Ou alors</h2>
