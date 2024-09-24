@@ -24,19 +24,6 @@ const sendErrorResponse = (error: unknown): Response => {
     },
   };
 
-  // any error
-  if (error instanceof Object) {
-    // if the error is a schema validation error
-    if ('status' in error && 'messages' in error && error.status === HTTP_SCHEMA_ERROR) {
-      apiError.error.code = HTTP_SCHEMA_ERROR;
-      apiError.error.details = error.messages;
-      return Response.json(apiError, {status: apiError.error.code});
-    }
-
-    apiError.error.details = 'message' in error ? error.message : error;
-    return Response.json(apiError, {status: apiError.error.code});
-  }
-
   // if the error is a Prisma error
   if (error instanceof PrismaClientKnownRequestError) {
     // if the error is a duplicate error
@@ -66,6 +53,21 @@ const sendErrorResponse = (error: unknown): Response => {
       apiError.error.message = MSG_NOT_FOUND;
       apiError.error.details = `Can not update table ${error.meta!.modelName} because the record does not exist`;
     }
+
+    return Response.json(apiError, {status: apiError.error.code});
+  }
+
+  // any error
+  if (error instanceof Object) {
+    // if the error is a schema validation error
+    if ('status' in error && 'messages' in error && error.status === HTTP_SCHEMA_ERROR) {
+      apiError.error.code = HTTP_SCHEMA_ERROR;
+      apiError.error.details = error.messages;
+      return Response.json(apiError, {status: apiError.error.code});
+    }
+
+    apiError.error.details = 'message' in error ? error.message : error;
+    return Response.json(apiError, {status: apiError.error.code});
   }
 
   return Response.json(apiError, {status: apiError.error.code});
