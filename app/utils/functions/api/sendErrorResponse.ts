@@ -24,10 +24,16 @@ const sendErrorResponse = (error: unknown): Response => {
     },
   };
 
-  // if the error is a schema validation error
-  if (error instanceof Object && 'status' in error && 'messages' in error && error.status === HTTP_SCHEMA_ERROR) {
-    apiError.error.code = HTTP_SCHEMA_ERROR;
-    apiError.error.details = error.messages;
+  // any error
+  if (error instanceof Object) {
+    // if the error is a schema validation error
+    if ('status' in error && 'messages' in error && error.status === HTTP_SCHEMA_ERROR) {
+      apiError.error.code = HTTP_SCHEMA_ERROR;
+      apiError.error.details = error.messages;
+      return Response.json(apiError, {status: apiError.error.code});
+    }
+
+    apiError.error.details = 'message' in error ? error.message : error;
     return Response.json(apiError, {status: apiError.error.code});
   }
 
