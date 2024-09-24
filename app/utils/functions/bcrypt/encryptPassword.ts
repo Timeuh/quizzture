@@ -4,8 +4,6 @@ import * as bcrypt from 'bcrypt';
  * Encrypt the password with bcrypt
  *
  * @param {string} password the password to hash
- *
- * @return {Promise<string>} a promise containing the hashed password
  */
 const encryptPassword = async (password: string): Promise<string> => {
   if (!process.env.BCRYPT_SALT) {
