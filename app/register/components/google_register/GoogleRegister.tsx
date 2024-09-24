@@ -11,6 +11,7 @@ export default function GoogleRegister() {
       onError={() => {
         console.log('Login Failed');
       }}
+      text='signup_with'
     />
   );
 }
