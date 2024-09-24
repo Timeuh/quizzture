@@ -8,8 +8,8 @@ datasource db {
 }
 
 model user {
-  email           String @id @unique
-  password        String
+  email           String  @id @unique
+  password        String?
   highest_score   Int
   victories       Int
   victories_chain Int
