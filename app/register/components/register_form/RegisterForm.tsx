@@ -2,11 +2,25 @@
 
 import {FormEvent} from 'react';
 import {cRegister_input, cRegister_label, cRegister_register, cRegister_submit} from './RegisterForm.styles';
+import createUser from '@actions/user/createUser';
 
 export default function RegisterForm() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('submit');
+    const target = event.target as HTMLFormElement;
+    const formData = new FormData(target);
+
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const repeat = formData.get('repeat') as string;
+
+    if (password !== repeat) {
+      alert('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    const creation = await createUser(email, password, 'email');
+    console.log(creation);
   };
 
   return (
