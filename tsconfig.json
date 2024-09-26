@@ -27,7 +27,8 @@
       "@hooks/*": ["./app/hooks/*"],
       "@views/*": ["./app/views/*"],
       "@texts/*": ["./app/texts/*"],
-      "@schemas/*": ["./app/vine/*"]
+      "@schemas/*": ["./app/vine/*"],
+      "@actions/*": ["./app/actions/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "server.js"],
