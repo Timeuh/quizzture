@@ -26,7 +26,8 @@
       "@providers/*": ["./app/providers/*"],
       "@hooks/*": ["./app/hooks/*"],
       "@views/*": ["./app/views/*"],
-      "@texts/*": ["./app/texts/*"]
+      "@texts/*": ["./app/texts/*"],
+      "@schemas/*": ["./app/vine/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "server.js"],
