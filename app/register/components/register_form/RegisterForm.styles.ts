@@ -42,3 +42,16 @@ export const cRegister_submit = hstack({
   transition: 'background-color 0.5s',
   cursor: 'pointer',
 });
+
+export const cRegister_inputError = (error: boolean) => {
+  return css({
+    border: '2px solid',
+    borderColor: error ? 'red.500' : 'none',
+    color: error ? 'red.500' : 'none',
+  });
+};
+
+export const cRegister_error = css({
+  color: 'red.500',
+  fontSize: 'lg',
+});
