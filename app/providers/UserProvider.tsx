@@ -3,7 +3,7 @@
 import getUserCookie from '@actions/cookies/getUserCookie';
 import readUser from '@utils/functions/jwt/readUser';
 import {UserPayload} from '@utils/types/api';
-import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
 
 type Props = {
   children: ReactNode;
@@ -30,7 +30,11 @@ export default function UserProvider({children}: Props) {
     fetchUser();
   }, [userJwt]);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  const userMemo = useMemo(() => {
+    return user;
+  }, [user]);
+
+  return <UserContext.Provider value={userMemo}>{children}</UserContext.Provider>;
 }
 
 /**
