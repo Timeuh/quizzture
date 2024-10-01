@@ -12,6 +12,10 @@ const readUser = async (token: string): Promise<UserPayload | false> => {
     throw new Error('You must define an env variable with the name NEXT_PUBLIC_JWT_SECRET');
   }
 
+  if (!token) {
+    return false;
+  }
+
   // encode secret
   const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
 
