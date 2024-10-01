@@ -1,3 +1,5 @@
+'use server';
+
 import {User} from '@schemas/user/user.schema';
 import {ApiError} from '@utils/types/api';
 
