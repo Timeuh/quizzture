@@ -11,11 +11,10 @@ export interface ApiError {
 
 export interface UserPayload {
   payload: {
-    user: User;
     iat: number;
     iss: string;
     exp: number;
-  };
+  } & User;
   protectedHeader: {
     alg: string;
   };
