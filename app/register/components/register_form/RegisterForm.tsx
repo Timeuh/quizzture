@@ -13,6 +13,8 @@ import createUser from '@actions/user/createUser';
 import {ApiError} from '@utils/types/api';
 import {User} from '@schemas/user/user.schema';
 import {useRouter} from 'next/navigation';
+import createJwt from '@utils/functions/jwt/createJwt';
+import setUserCookie from '@actions/cookies/setUserCookie';
 
 export default function RegisterForm() {
   const [passwordRepeatError, setPasswordRepeatError] = useState<boolean>(false);
@@ -45,7 +47,6 @@ export default function RegisterForm() {
 
     // create the user
     const creation: User | ApiError = await createUser(email, password, 'email');
-    console.log(creation);
 
     // if the creation failed
     if ('error' in creation) {
@@ -60,6 +61,10 @@ export default function RegisterForm() {
       setError('Une erreur est survenue, veuillez réessayer');
       return;
     }
+
+    // create user jwt and set it in cookies
+    const userJwt = await createJwt(creation);
+    setUserCookie(userJwt);
 
     // reset the form and redirect to the home page
     target.reset();

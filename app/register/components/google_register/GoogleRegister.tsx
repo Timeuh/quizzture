@@ -7,6 +7,8 @@ import readJwt from '@utils/functions/jwt/readJwt';
 import {GoogleAuth} from '@utils/types/api';
 import createUser from '@actions/user/createUser';
 import {useRouter} from 'next/navigation';
+import createJwt from '@utils/functions/jwt/createJwt';
+import setUserCookie from '@actions/cookies/setUserCookie';
 
 export default function GoogleRegister() {
   const [error, setError] = useState<string>('');
@@ -31,6 +33,10 @@ export default function GoogleRegister() {
       setError('Une erreur est survenue, veuillez réessayer');
       return;
     }
+
+    // create user jwt and set it in cookies
+    const userJwt = await createJwt(creation);
+    setUserCookie(userJwt);
 
     // redirect to the home page
     router.push('/');
