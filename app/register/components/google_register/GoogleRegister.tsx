@@ -1,7 +1,7 @@
 'use client';
 
 import {CredentialResponse, GoogleLogin} from '@react-oauth/google';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import {cGoogleRegister_error, cGoogleRegister_register} from './GoogleRegister.styles';
 import readJwt from '@utils/functions/jwt/readJwt';
 import {GoogleAuth} from '@utils/types/api';
@@ -15,36 +15,39 @@ export default function GoogleRegister() {
 
   const router = useRouter();
 
-  const handleSuccess = async (credentialResponse: CredentialResponse) => {
-    // decode google auth jwt
-    const decoded: GoogleAuth = (await readJwt(credentialResponse.credential || '')) as GoogleAuth;
-    // create the user
-    const creation = await createUser(decoded.email, '', 'google');
+  const handleSuccess = useCallback(
+    async (credentialResponse: CredentialResponse) => {
+      // decode google auth jwt
+      const decoded: GoogleAuth = (await readJwt(credentialResponse.credential || '')) as GoogleAuth;
+      // create the user
+      const creation = await createUser(decoded.email, '', 'google');
 
-    // if the creation failed
-    if ('error' in creation) {
-      // if the email is already used
-      if (creation.error.message === 'Duplicate error') {
-        setError('Ce compte est déjà utilisé');
+      // if the creation failed
+      if ('error' in creation) {
+        // if the email is already used
+        if (creation.error.message === 'Duplicate error') {
+          setError('Ce compte est déjà utilisé');
+          return;
+        }
+
+        // otherwise
+        setError('Une erreur est survenue, veuillez réessayer');
         return;
       }
 
-      // otherwise
-      setError('Une erreur est survenue, veuillez réessayer');
-      return;
-    }
+      // create user jwt and set it in cookies
+      const userJwt = await createJwt(creation);
+      setUserCookie(userJwt);
 
-    // create user jwt and set it in cookies
-    const userJwt = await createJwt(creation);
-    setUserCookie(userJwt);
+      // redirect to the home page
+      router.push('/');
+    },
+    [router],
+  );
 
-    // redirect to the home page
-    router.push('/');
-  };
-
-  const handleError = () => {
+  const handleError = useCallback(() => {
     setError('Connexion à Google échouée, veuillez rééssayer');
-  };
+  }, []);
 
   return (
     <section id='google_login' className={cGoogleRegister_register}>

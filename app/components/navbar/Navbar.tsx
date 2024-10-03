@@ -25,8 +25,8 @@ export default function Navbar() {
         <Image
           src={'/images/logo.png'}
           alt={'quizz logo'}
-          width={0}
-          height={0}
+          width={50}
+          height={50}
           sizes={'100vw'}
           className={cNavbar_logo}
         />
