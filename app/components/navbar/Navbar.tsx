@@ -16,7 +16,6 @@ import React from 'react';
 
 export default function Navbar() {
   const user: UserPayload | null = useUserContext();
-  console.log(user);
 
   return (
     <nav className={cNavbar_navbar}>
