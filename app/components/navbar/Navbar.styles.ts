@@ -12,7 +12,7 @@ export const cNavbar_navbar = hstack({
   shadow: '0 2px 6px 0 token(colors.platinum.light_25)',
   top: 0,
   w: 'full',
-  zIndex: 1,
+  zIndex: 2,
 });
 
 export const cNavbar_title = hstack({
