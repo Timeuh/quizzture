@@ -50,3 +50,7 @@ export const cNavbar_loginButton = css({
   },
   transition: 'all 0.5s',
 });
+
+export const cNavbar_userProfile = css({
+  cursor: 'pointer',
+});

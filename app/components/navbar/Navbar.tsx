@@ -9,6 +9,7 @@ import {
   cNavbar_logo,
   cNavbar_navbar,
   cNavbar_title,
+  cNavbar_userProfile,
 } from '@components/navbar/Navbar.styles';
 import {useUserContext} from '@providers/UserProvider';
 import {UserPayload} from '@utils/types/api';
@@ -40,7 +41,9 @@ export default function Navbar() {
         </Link>
         <div className={cNavbar_accountContainer}>
           {user ? (
-            <button onClick={toggleMenu}>{user.payload.email}</button>
+            <button onClick={toggleMenu} className={cNavbar_userProfile}>
+              {user.payload.email}
+            </button>
           ) : (
             <React.Fragment>
               <Link href={'/login'} className={cNavbar_loginButton}>

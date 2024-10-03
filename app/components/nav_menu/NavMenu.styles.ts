@@ -28,4 +28,5 @@ export const cNavMenu_link = hstack({
     _hover: 'platinum.800',
   },
   transition: 'background-color 0.5s',
+  cursor: 'pointer',
 });
