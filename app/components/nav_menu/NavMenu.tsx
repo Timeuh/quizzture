@@ -1,4 +1,4 @@
-import logout from '@actions/user/logout';
+import userLogout from '@actions/user/userLogout';
 import Logout from '@components/icons/Logout';
 import Profile from '@components/icons/Profile';
 import {cNavMenu_link, cNavMenu_menu} from '@components/nav_menu/NavMenu.styles';
@@ -12,7 +12,7 @@ type Props = {
 export default function NavMenu({shouldDisplay, hideSelf}: Props) {
   const handleLogout = () => {
     hideSelf();
-    logout();
+    userLogout();
   };
 
   return (
