@@ -1,8 +1,9 @@
 import {Credentials, credentialsValidator} from '@schemas/credentials/credentials.schema';
 import {User} from '@schemas/user/user.schema';
-import {HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND} from '@utils/constants/api';
+import {HTTP_BAD_REQUEST, HTTP_NOT_FOUND, HTTP_OK, MSG_INCORRECT_PASSWORD, MSG_NOT_FOUND} from '@utils/constants/api';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
+import validatePassword from '@utils/functions/bcrypt/validatePassword';
 import {prisma} from '@utils/prisma/client';
 import {ApiError} from '@utils/types/api';
 
@@ -33,6 +34,24 @@ export async function POST(request: Request): Promise<Response> {
       };
 
       return sendJsonResponse<ApiError>(error, HTTP_NOT_FOUND);
+    }
+
+    const shouldVerifyPassword: boolean = parsedBody.type === 'email' && parsedBody.password !== undefined;
+
+    const isAuth: boolean | null = shouldVerifyPassword
+      ? await validatePassword(parsedBody.password!, searchedUser.password!)
+      : null;
+
+    if (!isAuth) {
+      const error: ApiError = {
+        error: {
+          code: HTTP_BAD_REQUEST,
+          message: MSG_INCORRECT_PASSWORD,
+          details: 'Password is incorrect',
+        },
+      };
+
+      return sendJsonResponse<ApiError>(error, HTTP_BAD_REQUEST);
     }
 
     return sendJsonResponse<User>(searchedUser, HTTP_OK);
