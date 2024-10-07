@@ -17,7 +17,7 @@ import setUserCookie from '@actions/cookies/setUserCookie';
 import logUser from '@actions/user/logUser';
 
 export default function LoginForm() {
-  const [passwordRepeatError, setPasswordRepeatError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -26,7 +26,7 @@ export default function LoginForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // reset errors and prevent default behavior
     event.preventDefault();
-    setPasswordRepeatError(false);
+    setPasswordError(false);
     setEmailError(false);
     setError('');
 
@@ -46,6 +46,13 @@ export default function LoginForm() {
       if (login.error.code === 404) {
         setError('Aucun compte associé à cet email');
         setEmailError(true);
+        return;
+      }
+
+      // if the password is incorrect
+      if (login.error.message === 'Password is incorrect') {
+        setError('Mot de passe incorrect');
+        setPasswordError(true);
         return;
       }
 
@@ -80,7 +87,7 @@ export default function LoginForm() {
         <input
           type='password'
           name='password'
-          className={`${cRegister_input} ${cRegister_inputError(passwordRepeatError)}`}
+          className={`${cRegister_input} ${cRegister_inputError(passwordError)}`}
           placeholder='CL6T3Yxi$Mnfnfs8'
         />
       </label>
