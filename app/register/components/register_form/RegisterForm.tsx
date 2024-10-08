@@ -34,6 +34,7 @@ export default function RegisterForm() {
     const target = event.target as HTMLFormElement;
     const formData = new FormData(target);
 
+    const username = formData.get('username') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const repeat = formData.get('repeat') as string;
@@ -46,7 +47,7 @@ export default function RegisterForm() {
     }
 
     // create the user
-    const creation: User | ApiError = await createUser(email, password, 'email');
+    const creation: User | ApiError = await createUser(username, email, password, 'email');
 
     // if the creation failed
     if ('error' in creation) {
@@ -74,6 +75,10 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className={cRegister_register}>
       <h3 className={cRegister_error}>{error}</h3>
+      <label htmlFor='username' className={cRegister_label}>
+        Pseudo
+        <input type='string' name='username' className={cRegister_input} placeholder='JohnDoe' />
+      </label>
       <label htmlFor='email' className={cRegister_label}>
         Email
         <input
