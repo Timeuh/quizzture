@@ -38,6 +38,10 @@ export async function POST(request: Request): Promise<Response> {
 
     const shouldVerifyPassword: boolean = parsedBody.type === 'email' && parsedBody.password !== undefined;
 
+    if (!shouldVerifyPassword) {
+      return sendJsonResponse<User>(searchedUser, HTTP_OK);
+    }
+
     const isAuth: boolean | null = shouldVerifyPassword
       ? await validatePassword(parsedBody.password!, searchedUser.password!)
       : null;
