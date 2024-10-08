@@ -23,7 +23,7 @@ export async function POST(request: Request): Promise<Response> {
 
     const createdUser: User = await prisma.user.create({
       data: {
-        username: parsedBody.username,
+        username: parsedBody.username!,
         email: parsedBody.email,
         password: hashedPassword,
         highest_score: 0,
