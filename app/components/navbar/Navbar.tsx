@@ -42,7 +42,7 @@ export default function Navbar() {
         <div className={cNavbar_accountContainer}>
           {user ? (
             <button onClick={toggleMenu} className={cNavbar_userProfile}>
-              {user.payload.email}
+              {user.payload.username}
             </button>
           ) : (
             <React.Fragment>
