@@ -1,0 +1,21 @@
+meta {
+  name: create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:57001/api/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "admin",
+    "picture": "/image/picture/logo1.png",
+    "email": "admin@gmail.com",
+    "password": "admin",
+    "type": "email"
+  }
+}

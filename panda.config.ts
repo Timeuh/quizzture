@@ -1,11 +1,11 @@
-import { defineConfig } from "@pandacss/dev";
+import {defineConfig} from '@pandacss/dev';
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
   // Where to look for your css declarations
-  include: ["./app/**/*.{js,jsx,ts,tsx}"],
+  include: ['./app/**/*.{js,jsx,ts,tsx}'],
 
   // Files to exclude
   exclude: [],
@@ -28,6 +28,7 @@ export default defineConfig({
           },
           platinum: {
             light: {value: '#F9FAF9'},
+            light_25: {value: 'rgba(249,250,249, 0.25)'},
             200: {value: '#ECEFEC'},
             300: {value: '#DADDDA'},
             400: {value: '#D2D5D2'},
@@ -41,7 +42,7 @@ export default defineConfig({
       },
     },
   },
-  
+
   // The output directory for your css system
-  outdir: "styled-system",
+  outdir: 'styled-system',
 });
