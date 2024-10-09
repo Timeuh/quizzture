@@ -13,14 +13,19 @@ import {prisma} from '@utils/prisma/client';
  */
 export async function POST(request: Request): Promise<Response> {
   try {
+    // get request body
     const body = await request.json();
 
+    // validate the body with the schema
     const parsedBody: Credentials = await credentialsValidator.validate(body);
 
+    // check if the password should be hashed
     const shouldHash: boolean = parsedBody.type === 'email' && parsedBody.password !== undefined;
 
+    // hash the password if needed
     const hashedPassword: string | null = shouldHash ? await encryptPassword(parsedBody.password!) : null;
 
+    // create the user in database
     const createdUser: User = await prisma.user.create({
       data: {
         username: parsedBody.username!,
@@ -37,6 +42,7 @@ export async function POST(request: Request): Promise<Response> {
       },
     });
 
+    // return the created user
     return sendJsonResponse<User>(createdUser, HTTP_CREATED);
   } catch (error: unknown) {
     return sendErrorResponse(error);
