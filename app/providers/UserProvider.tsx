@@ -19,6 +19,9 @@ export default function UserProvider({children}: Props) {
   const [user, setUser] = useState<UserPayload | null>(null);
   const userJwt = getUserCookie();
 
+  /**
+   * Fetch the user from the jwt when the component mounts
+   */
   useEffect(() => {
     const fetchUser = async () => {
       const userResult = await readUser(userJwt);
@@ -30,6 +33,9 @@ export default function UserProvider({children}: Props) {
     fetchUser();
   }, [userJwt]);
 
+  /**
+   * Memoize the user to avoid re-rendering
+   */
   const userMemo = useMemo(() => {
     return user;
   }, [user]);
