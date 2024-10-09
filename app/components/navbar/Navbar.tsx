@@ -9,6 +9,7 @@ import {
   cNavbar_logo,
   cNavbar_navbar,
   cNavbar_title,
+  cNavbar_userPicture,
   cNavbar_userProfile,
 } from '@components/navbar/Navbar.styles';
 import {useUserContext} from '@providers/UserProvider';
@@ -42,7 +43,15 @@ export default function Navbar() {
         <div className={cNavbar_accountContainer}>
           {user ? (
             <button onClick={toggleMenu} className={cNavbar_userProfile}>
-              {user.payload.username}
+              <h3>{user.payload.username}</h3>
+              <Image
+                src={user.payload.picture}
+                alt={'quizz logo'}
+                width={50}
+                height={50}
+                sizes={'100vw'}
+                className={cNavbar_userPicture}
+              />
             </button>
           ) : (
             <React.Fragment>

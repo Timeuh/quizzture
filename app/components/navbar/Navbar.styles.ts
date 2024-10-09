@@ -1,5 +1,5 @@
 import {css} from '@styles/css';
-import {hstack} from '@styles/patterns';
+import {circle, hstack} from '@styles/patterns';
 
 export const cNavbar_navbar = hstack({
   color: 'platinum.light',
@@ -51,6 +51,11 @@ export const cNavbar_loginButton = css({
   transition: 'all 0.5s',
 });
 
-export const cNavbar_userProfile = css({
+export const cNavbar_userProfile = hstack({
+  gap: 4,
   cursor: 'pointer',
+});
+
+export const cNavbar_userPicture = circle({
+  size: 10,
 });
