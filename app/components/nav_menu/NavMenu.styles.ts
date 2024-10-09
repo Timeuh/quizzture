@@ -1,5 +1,6 @@
 import {hstack, vstack} from '@styles/patterns';
 
+// css : navigation menu container
 export const cNavMenu_menu = (shouldDisplay: boolean) => {
   return vstack({
     bg: 'platinum.dark',
@@ -17,6 +18,7 @@ export const cNavMenu_menu = (shouldDisplay: boolean) => {
   });
 };
 
+// css : navigation menu link
 export const cNavMenu_link = hstack({
   borderRadius: 'sm',
   gap: 4,

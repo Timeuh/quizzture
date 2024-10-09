@@ -1,6 +1,7 @@
 import {css} from '@styles/css';
 import {circle, hstack} from '@styles/patterns';
 
+// css : navbar container
 export const cNavbar_navbar = hstack({
   color: 'platinum.light',
   backgroundColor: 'platinum.dark',
@@ -15,6 +16,7 @@ export const cNavbar_navbar = hstack({
   zIndex: 2,
 });
 
+// css : title
 export const cNavbar_title = hstack({
   color: 'nyanza.200',
   fontSize: '3xl',
@@ -22,15 +24,18 @@ export const cNavbar_title = hstack({
   gap: 6,
 });
 
+// css : logo
 export const cNavbar_logo = css({
   h: 'auto',
   w: 16,
 });
 
+// css : user account container
 export const cNavbar_accountContainer = hstack({
   gap: 6,
 });
 
+// css : account creation button
 export const cNavbar_createAccountButton = css({
   p: 1,
   px: 2,
@@ -43,6 +48,7 @@ export const cNavbar_createAccountButton = css({
   transition: 'background-color 0.5s',
 });
 
+// css : login button
 export const cNavbar_loginButton = css({
   color: {
     base: 'platinum.light',
@@ -51,11 +57,13 @@ export const cNavbar_loginButton = css({
   transition: 'all 0.5s',
 });
 
+// css : user profile container
 export const cNavbar_userProfile = hstack({
   gap: 4,
   cursor: 'pointer',
 });
 
+// css : user picture
 export const cNavbar_userPicture = circle({
   size: 10,
 });

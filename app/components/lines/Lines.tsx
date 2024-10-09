@@ -4,7 +4,13 @@ type Props = {
   direction: 'left' | 'right';
 };
 
+/**
+ * Lines decoration for home page
+ *
+ * @param {'left' | 'right'} direction : the direction of the lines
+ */
 export default function Lines({direction}: Props) {
+  // array of 20 lines
   const lines = new Array(20).fill(0);
 
   return (

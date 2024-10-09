@@ -9,7 +9,16 @@ type Props = {
   hideSelf: () => void;
 };
 
+/**
+ * User navigation menu
+ *
+ * @param {boolean} shouldDisplay : should the menu be displayed
+ * @param {function} hideSelf : function to hide the menu
+ */
 export default function NavMenu({shouldDisplay, hideSelf}: Props) {
+  /**
+   * Logout the user
+   */
   const handleLogout = () => {
     hideSelf();
     userLogout();

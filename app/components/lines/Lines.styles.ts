@@ -1,6 +1,7 @@
 import {css} from '@styles/css';
 import {vstack} from '@styles/patterns';
 
+// css : container of the lines
 export const cLines_container = (direction: 'left' | 'right') => {
   return vstack({
     position: 'absolute',
@@ -14,6 +15,7 @@ export const cLines_container = (direction: 'left' | 'right') => {
   });
 };
 
+// css : line itself
 export const cLines_line = css({
   bg: 'nyanza.200',
   h: 0.4,

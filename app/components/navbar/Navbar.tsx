@@ -17,11 +17,18 @@ import {UserPayload} from '@utils/types/api';
 import React, {useState} from 'react';
 import NavMenu from '@components/nav_menu/NavMenu';
 
+/**
+ * Navigation bar
+ */
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
+  // get the user from the context
   const user: UserPayload | null = useUserContext();
 
+  /**
+   * Toggle the user nav menu opening
+   */
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
