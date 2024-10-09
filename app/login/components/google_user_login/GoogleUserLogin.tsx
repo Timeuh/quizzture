@@ -2,7 +2,7 @@
 
 import {CredentialResponse, GoogleLogin} from '@react-oauth/google';
 import {useState, useCallback} from 'react';
-import {cGoogleRegister_error, cGoogleRegister_register} from './GoogleUserLogin.styles';
+import {cGoogleLogin_error, cGoogleLogin_login} from './GoogleUserLogin.styles';
 import readJwt from '@utils/functions/jwt/readJwt';
 import {GoogleAuth} from '@utils/types/api';
 import {useRouter} from 'next/navigation';
@@ -10,11 +10,19 @@ import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
 import logUser from '@actions/user/logUser';
 
+/**
+ * Log the user with google auth
+ */
 export default function GoogleUserLogin() {
   const [error, setError] = useState<string>('');
 
   const router = useRouter();
 
+  /**
+   * Success login
+   *
+   * @param {CredentialResponse} credentialResponse : the response from google auth
+   */
   const handleSuccess = useCallback(
     async (credentialResponse: CredentialResponse) => {
       // decode google auth jwt
@@ -45,13 +53,16 @@ export default function GoogleUserLogin() {
     [router],
   );
 
+  /**
+   * Error login
+   */
   const handleError = useCallback(() => {
     setError('Connexion à Google échouée, veuillez rééssayer');
   }, []);
 
   return (
-    <section id='google_login' className={cGoogleRegister_register}>
-      <h3 className={cGoogleRegister_error}>{error}</h3>
+    <section id='google_login' className={cGoogleLogin_login}>
+      <h3 className={cGoogleLogin_error}>{error}</h3>
       <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
     </section>
   );

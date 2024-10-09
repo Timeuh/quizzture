@@ -1,11 +1,13 @@
 import {css} from '@styles/css';
 import {vstack} from '@styles/patterns';
 
-export const cGoogleRegister_error = css({
+// css : error message
+export const cGoogleLogin_error = css({
   color: 'red.500',
   fontSize: 'lg',
 });
 
-export const cGoogleRegister_register = vstack({
+// css : login container
+export const cGoogleLogin_login = vstack({
   gap: 4,
 });

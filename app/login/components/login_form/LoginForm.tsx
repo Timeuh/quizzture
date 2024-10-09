@@ -2,12 +2,12 @@
 
 import {FormEvent, useState} from 'react';
 import {
-  cRegister_error,
-  cRegister_input,
-  cRegister_label,
-  cRegister_inputError,
-  cRegister_register,
-  cRegister_submit,
+  cLogin_error,
+  cLogin_input,
+  cLogin_label,
+  cLogin_inputError,
+  cLogin_login,
+  cLogin_submit,
 } from './LoginForm.styles';
 import {ApiError} from '@utils/types/api';
 import {User} from '@schemas/user/user.schema';
@@ -16,6 +16,9 @@ import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
 import logUser from '@actions/user/logUser';
 
+/**
+ * Form to log the user in
+ */
 export default function LoginForm() {
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
@@ -23,6 +26,11 @@ export default function LoginForm() {
 
   const router = useRouter();
 
+  /**
+   * Login form submission
+   *
+   * @param {FormEvent<HTMLFormElement>} event : the submission event
+   */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // reset errors and prevent default behavior
     event.preventDefault();
@@ -71,27 +79,27 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cRegister_register}>
-      <h3 className={cRegister_error}>{error}</h3>
-      <label htmlFor='email' className={cRegister_label}>
+    <form onSubmit={handleSubmit} className={cLogin_login}>
+      <h3 className={cLogin_error}>{error}</h3>
+      <label htmlFor='email' className={cLogin_label}>
         Email
         <input
           type='email'
           name='email'
-          className={`${cRegister_input} ${cRegister_inputError(emailError)}`}
+          className={`${cLogin_input} ${cLogin_inputError(emailError)}`}
           placeholder='john.doe@gmail.com'
         />
       </label>
-      <label htmlFor='password' className={cRegister_label}>
+      <label htmlFor='password' className={cLogin_label}>
         Mot de passe{' '}
         <input
           type='password'
           name='password'
-          className={`${cRegister_input} ${cRegister_inputError(passwordError)}`}
+          className={`${cLogin_input} ${cLogin_inputError(passwordError)}`}
           placeholder='CL6T3Yxi$Mnfnfs8'
         />
       </label>
-      <button type='submit' className={cRegister_submit}>
+      <button type='submit' className={cLogin_submit}>
         Connexion
       </button>
     </form>

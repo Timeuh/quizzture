@@ -1,5 +1,8 @@
 import LoginView from './views/login_view/LoginView';
 
-export default function Register() {
+/**
+ * User login page
+ */
+export default function Login() {
   return <LoginView />;
 }

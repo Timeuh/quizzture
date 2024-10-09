@@ -8,6 +8,9 @@ import {
   vLogin_title,
 } from './LoginView.styles';
 
+/**
+ * Login page main view
+ */
 export default function LoginView() {
   return (
     <main className={vLogin_login}>

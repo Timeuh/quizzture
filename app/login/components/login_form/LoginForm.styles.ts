@@ -1,11 +1,13 @@
 import {css} from '@styles/css';
 import {hstack, vstack} from '@styles/patterns';
 
-export const cRegister_register = vstack({
+// css : login container
+export const cLogin_login = vstack({
   gap: 4,
 });
 
-export const cRegister_input = css({
+// css : input field
+export const cLogin_input = css({
   bg: 'platinum.light',
   color: 'platinum.dark',
   outlineColor: 'platinum.dark',
@@ -18,14 +20,16 @@ export const cRegister_input = css({
   w: 'full',
 });
 
-export const cRegister_label = vstack({
+// css : input label
+export const cLogin_label = vstack({
   gap: 1,
   alignItems: 'start',
   fontSize: 'lg',
   w: '20vw',
 });
 
-export const cRegister_submit = hstack({
+// css : submit button
+export const cLogin_submit = hstack({
   bg: {
     base: 'nyanza.300',
     _hover: 'nyanza.main',
@@ -43,7 +47,8 @@ export const cRegister_submit = hstack({
   cursor: 'pointer',
 });
 
-export const cRegister_inputError = (error: boolean) => {
+// css : input error
+export const cLogin_inputError = (error: boolean) => {
   return css({
     border: '2px solid',
     borderColor: error ? 'red.500' : 'none',
@@ -51,7 +56,8 @@ export const cRegister_inputError = (error: boolean) => {
   });
 };
 
-export const cRegister_error = css({
+// css : error message
+export const cLogin_error = css({
   color: 'red.500',
   fontSize: 'lg',
 });
