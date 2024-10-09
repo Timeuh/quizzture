@@ -20,14 +20,19 @@ import {
 import Image from 'next/image';
 import {Picture} from '@utils/types/home';
 
+/**
+ * User registration form
+ */
 export default function RegisterForm() {
   const [passwordRepeatError, setPasswordRepeatError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [selectedPicture, setSelectedPicture] = useState<string>('/images/picture/logo1.png');
 
+  // next router
   const router = useRouter();
 
+  // user profile pictures
   const pictures: Picture[] = [
     {
       src: '/images/picture/logo1.png',
@@ -47,6 +52,11 @@ export default function RegisterForm() {
     },
   ];
 
+  /**
+   * Handle user registration
+   *
+   * @param {FormEvent<HTMLFormElement>} event : the form submission event
+   */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // reset errors and prevent default behavior
     event.preventDefault();

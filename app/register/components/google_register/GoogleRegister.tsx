@@ -10,11 +10,19 @@ import {useRouter} from 'next/navigation';
 import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
 
+/**
+ * Register the user with google auth
+ */
 export default function GoogleRegister() {
   const [error, setError] = useState<string>('');
 
   const router = useRouter();
 
+  /**
+   * Success register
+   *
+   * @param {CredentialResponse} credentialResponse : the response from google auth
+   */
   const handleSuccess = useCallback(
     async (credentialResponse: CredentialResponse) => {
       // decode google auth jwt
@@ -45,6 +53,9 @@ export default function GoogleRegister() {
     [router],
   );
 
+  /**
+   * Register error
+   */
   const handleError = useCallback(() => {
     setError('Connexion à Google échouée, veuillez rééssayer');
   }, []);

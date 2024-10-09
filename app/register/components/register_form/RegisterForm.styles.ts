@@ -1,10 +1,12 @@
 import {css} from '@styles/css';
 import {hstack, vstack} from '@styles/patterns';
 
+// css : register form container
 export const cRegister_register = vstack({
   gap: 4,
 });
 
+// css : input field
 export const cRegister_input = css({
   bg: 'platinum.light',
   color: 'platinum.dark',
@@ -18,6 +20,7 @@ export const cRegister_input = css({
   w: 'full',
 });
 
+// css : input label
 export const cRegister_label = vstack({
   gap: 1,
   alignItems: 'start',
@@ -25,6 +28,7 @@ export const cRegister_label = vstack({
   w: '20vw',
 });
 
+// css : submit button
 export const cRegister_submit = hstack({
   bg: {
     base: 'nyanza.300',
@@ -43,6 +47,7 @@ export const cRegister_submit = hstack({
   cursor: 'pointer',
 });
 
+// css : input field error
 export const cRegister_inputError = (error: boolean) => {
   return css({
     border: '2px solid',
@@ -51,17 +56,20 @@ export const cRegister_inputError = (error: boolean) => {
   });
 };
 
+// css : error message
 export const cRegister_error = css({
   color: 'red.500',
   fontSize: 'lg',
 });
 
+// css : user images container
 export const cRegister_userImages = hstack({
   gap: 0,
   w: 'full',
   justifyContent: 'space-between',
 });
 
+// css : user image
 export const cRegister_userImage = (isSelected: boolean) => {
   return css({
     border: '2px solid',

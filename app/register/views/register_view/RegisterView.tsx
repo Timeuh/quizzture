@@ -8,6 +8,9 @@ import {
   vRegister_title,
 } from './RegisterView.styles';
 
+/**
+ * Register page main view
+ */
 export default function RegisterView() {
   return (
     <main className={vRegister_register}>
