@@ -1,23 +1,24 @@
 'use client';
 
 import {FormEvent, useState} from 'react';
-import {
-  cRegister_error,
-  cRegister_input,
-  cRegister_label,
-  cRegister_inputError,
-  cRegister_register,
-  cRegister_submit,
-  cRegister_userImages,
-  cRegister_userImage,
-} from './RegisterForm.styles';
 import createUser from '@actions/user/createUser';
 import {ApiError} from '@utils/types/api';
 import {User} from '@schemas/user/user.schema';
 import {useRouter} from 'next/navigation';
 import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
+import {
+  cRegister_error,
+  cRegister_input,
+  cRegister_inputError,
+  cRegister_label,
+  cRegister_register,
+  cRegister_submit,
+  cRegister_userImage,
+  cRegister_userImages,
+} from './RegisterForm.styles';
 import Image from 'next/image';
+import {Picture} from '@utils/types/home';
 
 export default function RegisterForm() {
   const [passwordRepeatError, setPasswordRepeatError] = useState<boolean>(false);
@@ -26,6 +27,25 @@ export default function RegisterForm() {
   const [selectedPicture, setSelectedPicture] = useState<string>('/images/picture/logo1.png');
 
   const router = useRouter();
+
+  const pictures: Picture[] = [
+    {
+      src: '/images/picture/logo1.png',
+      alt: 'logo 1',
+    },
+    {
+      src: '/images/picture/logo2.png',
+      alt: 'logo 2',
+    },
+    {
+      src: '/images/picture/logo3.png',
+      alt: 'logo 3',
+    },
+    {
+      src: '/images/picture/logo4.png',
+      alt: 'logo 4',
+    },
+  ];
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     // reset errors and prevent default behavior
@@ -83,50 +103,22 @@ export default function RegisterForm() {
       <label htmlFor='username' className={cRegister_label}>
         Image de profil
         <div className={cRegister_userImages}>
-          <Image
-            src={'/images/picture/logo1.png'}
-            alt={'logo 1'}
-            width={50}
-            height={50}
-            sizes={'100vw'}
-            className={cRegister_userImage(selectedPicture === '/images/picture/logo1.png')}
-            onClick={() => {
-              return setSelectedPicture('/images/picture/logo1.png');
-            }}
-          />
-          <Image
-            src={'/images/picture/logo2.png'}
-            alt={'logo 2'}
-            width={50}
-            height={50}
-            sizes={'100vw'}
-            className={cRegister_userImage(selectedPicture === '/images/picture/logo2.png')}
-            onClick={() => {
-              return setSelectedPicture('/images/picture/logo2.png');
-            }}
-          />
-          <Image
-            src={'/images/picture/logo3.png'}
-            alt={'logo 3'}
-            width={50}
-            height={50}
-            sizes={'100vw'}
-            className={cRegister_userImage(selectedPicture === '/images/picture/logo3.png')}
-            onClick={() => {
-              return setSelectedPicture('/images/picture/logo3.png');
-            }}
-          />
-          <Image
-            src={'/images/picture/logo4.png'}
-            alt={'logo 4'}
-            width={50}
-            height={50}
-            sizes={'100vw'}
-            className={cRegister_userImage(selectedPicture === '/images/picture/logo4.png')}
-            onClick={() => {
-              return setSelectedPicture('/images/picture/logo4.png');
-            }}
-          />
+          {pictures.map((picture: Picture, index: number) => {
+            return (
+              <Image
+                key={index}
+                src={picture.src}
+                alt={picture.alt}
+                width={50}
+                height={50}
+                sizes={'100vw'}
+                className={cRegister_userImage(selectedPicture === picture.src)}
+                onClick={() => {
+                  return setSelectedPicture(picture.src);
+                }}
+              />
+            );
+          })}
         </div>
         <input type='string' name='picture' hidden={true} value={selectedPicture} />
       </label>
