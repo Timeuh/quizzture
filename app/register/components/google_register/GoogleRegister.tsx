@@ -20,7 +20,7 @@ export default function GoogleRegister() {
       // decode google auth jwt
       const decoded: GoogleAuth = (await readJwt(credentialResponse.credential || '')) as GoogleAuth;
       // create the user
-      const creation = await createUser(decoded.name, decoded.email, '', 'google');
+      const creation = await createUser(decoded.picture, decoded.name, decoded.email, '', 'google');
 
       // if the creation failed
       if ('error' in creation) {
