@@ -7,6 +7,7 @@ import {Infer} from '@vinejs/vine/types';
 
 const credentialsSchema = vine.object({
   username: vine.string().optional(),
+  picture: vine.string().optional(),
   email: vine.string().email(),
   type: vine.enum(['google', 'email']),
   password: vine.string().optional().requiredWhen('type', '=', 'email'),

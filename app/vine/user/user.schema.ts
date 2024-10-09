@@ -7,6 +7,7 @@ import {Infer} from '@vinejs/vine/types';
 
 const userSchema = vine.object({
   username: vine.string(),
+  picture: vine.string(),
   email: vine.string().email(),
   password: vine.string().nullable(),
   highest_score: vine.number(),
