@@ -7,6 +7,9 @@ import {
   vNotFound_title,
 } from '@views/not_found/NotFoundView.styles';
 
+/**
+ * Not found page main view
+ */
 export default function NotFoundView() {
   return (
     <main id='not-found' className={vNotFound_notFound}>

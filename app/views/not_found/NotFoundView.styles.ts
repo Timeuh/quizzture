@@ -1,6 +1,7 @@
 import {css} from '@styles/css';
 import {hstack, vstack} from '@styles/patterns';
 
+// css : not found container
 export const vNotFound_notFound = vstack({
   bg: 'platinum.dark',
   color: 'platinum.light',
@@ -10,10 +11,12 @@ export const vNotFound_notFound = vstack({
   justifyContent: 'center',
 });
 
+// css : title
 export const vNotFound_title = css({
   fontSize: '6xl',
 });
 
+// css : link to home page
 export const vNotFound_link = hstack({
   bg: {
     base: 'nyanza.200',
@@ -30,6 +33,7 @@ export const vNotFound_link = hstack({
   transition: 'background-color 0.5s',
 });
 
+// css : app logo
 export const vNotFound_logo = hstack({
   h: 'auto',
   w: 36,

@@ -16,6 +16,9 @@ import {
 import Image from 'next/image';
 import Lines from '@components/lines/Lines';
 
+/**
+ * Landing view in home page
+ */
 export default function LandingView() {
   return (
     <main className={vLanding_landing}>
