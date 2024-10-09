@@ -2,6 +2,11 @@ type Props = {
   className: string;
 };
 
+/**
+ * Profile icon
+ *
+ * @param {string} className : the css properties for the icon
+ */
 export default function Profile({className}: Props) {
   return (
     <svg

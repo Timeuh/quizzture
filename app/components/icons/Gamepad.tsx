@@ -2,6 +2,11 @@ type Props = {
   className: string;
 };
 
+/**
+ * Gamepad icon
+ *
+ * @param {string} className : the css properties for the icon
+ */
 export default function Gamepad({className}: Props) {
   return (
     <svg

@@ -2,6 +2,11 @@ type Props = {
   className: string;
 };
 
+/**
+ * Logout icon
+ *
+ * @param {string} className : the css properties for the icon
+ */
 export default function Logout({className}: Props) {
   return (
     <svg
