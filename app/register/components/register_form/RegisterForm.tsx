@@ -8,6 +8,8 @@ import {
   cRegister_inputError,
   cRegister_register,
   cRegister_submit,
+  cRegister_userImages,
+  cRegister_userImage,
 } from './RegisterForm.styles';
 import createUser from '@actions/user/createUser';
 import {ApiError} from '@utils/types/api';
@@ -15,11 +17,13 @@ import {User} from '@schemas/user/user.schema';
 import {useRouter} from 'next/navigation';
 import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
+import Image from 'next/image';
 
 export default function RegisterForm() {
   const [passwordRepeatError, setPasswordRepeatError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [selectedPicture, setSelectedPicture] = useState<string>('/images/picture/logo1.png');
 
   const router = useRouter();
 
@@ -34,6 +38,7 @@ export default function RegisterForm() {
     const target = event.target as HTMLFormElement;
     const formData = new FormData(target);
 
+    const picture = formData.get('picture') as string;
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -47,7 +52,7 @@ export default function RegisterForm() {
     }
 
     // create the user
-    const creation: User | ApiError = await createUser(username, email, password, 'email');
+    const creation: User | ApiError = await createUser(picture, username, email, password, 'email');
 
     // if the creation failed
     if ('error' in creation) {
@@ -75,6 +80,56 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className={cRegister_register}>
       <h3 className={cRegister_error}>{error}</h3>
+      <label htmlFor='username' className={cRegister_label}>
+        Image de profil
+        <div className={cRegister_userImages}>
+          <Image
+            src={'/images/picture/logo1.png'}
+            alt={'logo 1'}
+            width={50}
+            height={50}
+            sizes={'100vw'}
+            className={cRegister_userImage(selectedPicture === '/images/picture/logo1.png')}
+            onClick={() => {
+              return setSelectedPicture('/images/picture/logo1.png');
+            }}
+          />
+          <Image
+            src={'/images/picture/logo2.png'}
+            alt={'logo 2'}
+            width={50}
+            height={50}
+            sizes={'100vw'}
+            className={cRegister_userImage(selectedPicture === '/images/picture/logo2.png')}
+            onClick={() => {
+              return setSelectedPicture('/images/picture/logo2.png');
+            }}
+          />
+          <Image
+            src={'/images/picture/logo3.png'}
+            alt={'logo 3'}
+            width={50}
+            height={50}
+            sizes={'100vw'}
+            className={cRegister_userImage(selectedPicture === '/images/picture/logo3.png')}
+            onClick={() => {
+              return setSelectedPicture('/images/picture/logo3.png');
+            }}
+          />
+          <Image
+            src={'/images/picture/logo4.png'}
+            alt={'logo 4'}
+            width={50}
+            height={50}
+            sizes={'100vw'}
+            className={cRegister_userImage(selectedPicture === '/images/picture/logo4.png')}
+            onClick={() => {
+              return setSelectedPicture('/images/picture/logo4.png');
+            }}
+          />
+        </div>
+        <input type='string' name='picture' hidden={true} value={selectedPicture} />
+      </label>
       <label htmlFor='username' className={cRegister_label}>
         Pseudo
         <input type='string' name='username' className={cRegister_input} placeholder='JohnDoe' />

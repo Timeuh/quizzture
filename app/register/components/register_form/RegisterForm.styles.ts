@@ -55,3 +55,17 @@ export const cRegister_error = css({
   color: 'red.500',
   fontSize: 'lg',
 });
+
+export const cRegister_userImages = hstack({
+  gap: 0,
+  w: 'full',
+  justifyContent: 'space-between',
+});
+
+export const cRegister_userImage = (isSelected: boolean) => {
+  return css({
+    border: '2px solid',
+    borderColor: isSelected ? 'red.500' : 'none',
+    borderRadius: 'full',
+  });
+};
