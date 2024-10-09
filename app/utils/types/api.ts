@@ -9,6 +9,7 @@ export interface ApiError {
   };
 }
 
+// user jwt payload
 export interface UserPayload {
   payload: {
     iat: number;

@@ -12,6 +12,7 @@ const readUser = async (token: string): Promise<UserPayload | false> => {
     throw new Error('You must define an env variable with the name NEXT_PUBLIC_JWT_SECRET');
   }
 
+  // trying to read null user token
   if (!token) {
     return false;
   }
