@@ -1,5 +1,5 @@
 import {Credentials, credentialsValidator} from '@schemas/credentials/credentials.schema';
-import {User} from '@schemas/user/user.schema';
+import {CreatedUser} from '@schemas/user/user.schema';
 import {HTTP_CREATED} from '@utils/constants/api';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
@@ -26,7 +26,7 @@ export async function POST(request: Request): Promise<Response> {
     const hashedPassword: string | null = shouldHash ? await encryptPassword(parsedBody.password!) : null;
 
     // create the user in database
-    const createdUser: User = await prisma.user.create({
+    const createdUser: CreatedUser = await prisma.user.create({
       data: {
         username: parsedBody.username!,
         picture: parsedBody.picture!,
@@ -40,10 +40,13 @@ export async function POST(request: Request): Promise<Response> {
         games_chain: 0,
         games_three: 0,
       },
+      select: {
+        email: true,
+      },
     });
 
     // return the created user
-    return sendJsonResponse<User>(createdUser, HTTP_CREATED);
+    return sendJsonResponse<CreatedUser>(createdUser, HTTP_CREATED);
   } catch (error: unknown) {
     return sendErrorResponse(error);
   }
