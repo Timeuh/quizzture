@@ -2,8 +2,9 @@ import type {Metadata} from 'next';
 import './globals.css';
 import {Space_Grotesk} from 'next/font/google';
 import Navbar from '@components/navbar/Navbar';
-import GlobalProvider from '@providers/GlobalProvider';
+import GoogleProvider from '@providers/GoogleProvider';
 import UserProvider from '@providers/UserProvider';
+import ReactQueryProvider from '@providers/ReactQueryProvider';
 
 // load font
 const spaceGrotesk = Space_Grotesk({
@@ -30,12 +31,14 @@ export default function RootLayout({
   return (
     <html lang='fr'>
       <body className={`${spaceGrotesk.className}`}>
-        <GlobalProvider>
-          <UserProvider>
-            <Navbar />
-            {children}
-          </UserProvider>
-        </GlobalProvider>
+        <GoogleProvider>
+          <ReactQueryProvider>
+            <UserProvider>
+              <Navbar />
+              {children}
+            </UserProvider>
+          </ReactQueryProvider>
+        </GoogleProvider>
       </body>
     </html>
   );
