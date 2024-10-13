@@ -38,3 +38,10 @@ export interface GoogleAuth {
   exp: number;
   jti: string;
 }
+
+// api request parameters
+export interface ApiParams {
+  params: {
+    id: string;
+  };
+}
