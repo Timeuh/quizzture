@@ -13,9 +13,9 @@ import {
   cNavbar_userProfile,
 } from '@components/navbar/Navbar.styles';
 import {useUserContext} from '@providers/UserProvider';
-import {UserPayload} from '@utils/types/api';
 import React, {useState} from 'react';
 import NavMenu from '@components/nav_menu/NavMenu';
+import {User} from '@schemas/user/user.schema';
 
 /**
  * Navigation bar
@@ -24,7 +24,7 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   // get the user from the context
-  const user: UserPayload | null = useUserContext();
+  const user: User | null = useUserContext();
 
   /**
    * Toggle the user nav menu opening
@@ -50,9 +50,9 @@ export default function Navbar() {
         <div className={cNavbar_accountContainer}>
           {user ? (
             <button onClick={toggleMenu} className={cNavbar_userProfile}>
-              <h3>{user.payload.username}</h3>
+              <h3>{user.username}</h3>
               <Image
-                src={user.payload.picture}
+                src={user.picture}
                 alt={'quizz logo'}
                 width={50}
                 height={50}

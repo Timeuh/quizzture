@@ -13,7 +13,6 @@ import {
 import {ProfileScore} from '@utils/types/profile';
 import {useUserContext} from '@providers/UserProvider';
 import {User} from '@schemas/user/user.schema';
-import {UserPayload} from '@utils/types/api';
 import {useEffect, useState} from 'react';
 
 /**
@@ -43,21 +42,19 @@ export default function ProfileView() {
   ]);
 
   // get user from context
-  const userPayload: UserPayload | null = useUserContext();
+  const userPayload: User | null = useUserContext();
 
   // watch for user data
   useEffect(() => {
     if (userPayload) {
-      const actualUser: User = userPayload.payload;
-
-      setDisplayedUser(actualUser);
+      setDisplayedUser(userPayload);
       setScores([
-        {title: 'Victoires', score: actualUser.victories},
-        {title: 'Parties', score: actualUser.games},
-        {title: 'Victoires en chaîne', score: actualUser.victories_chain},
-        {title: 'Parties en chaîne', score: actualUser.games_chain},
-        {title: 'Victoires en 3 vies', score: actualUser.victories_three},
-        {title: 'Parties en 3 vies', score: actualUser.games_three},
+        {title: 'Victoires', score: userPayload.victories},
+        {title: 'Parties', score: userPayload.games},
+        {title: 'Victoires en chaîne', score: userPayload.victories_chain},
+        {title: 'Parties en chaîne', score: userPayload.games_chain},
+        {title: 'Victoires en 3 vies', score: userPayload.victories_three},
+        {title: 'Parties en 3 vies', score: userPayload.games_three},
       ]);
     }
   }, [userPayload, displayedUser]);
