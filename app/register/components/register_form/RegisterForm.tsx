@@ -3,7 +3,7 @@
 import {FormEvent, useState} from 'react';
 import createUser from '@actions/user/createUser';
 import {ApiError} from '@utils/types/api';
-import {User} from '@schemas/user/user.schema';
+import {CreatedUser} from '@schemas/user/user.schema';
 import {useRouter} from 'next/navigation';
 import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
@@ -82,7 +82,7 @@ export default function RegisterForm() {
     }
 
     // create the user
-    const creation: User | ApiError = await createUser(picture, username, email, password, 'email');
+    const creation: CreatedUser | ApiError = await createUser(picture, username, email, password, 'email');
 
     // if the creation failed
     if ('error' in creation) {
@@ -99,7 +99,7 @@ export default function RegisterForm() {
     }
 
     // create user jwt and set it in cookies
-    const userJwt = await createJwt(creation);
+    const userJwt: string = await createJwt(creation);
     setUserCookie(userJwt);
 
     // reset the form and redirect to the home page
@@ -130,7 +130,7 @@ export default function RegisterForm() {
             );
           })}
         </div>
-        <input type='string' name='picture' hidden={true} value={selectedPicture} />
+        <input type='string' name='picture' hidden={true} value={selectedPicture} readOnly />
       </label>
       <label htmlFor='username' className={cRegister_label}>
         Pseudo

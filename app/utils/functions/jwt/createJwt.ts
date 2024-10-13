@@ -1,12 +1,12 @@
 import {SignJWT} from 'jose';
-import {User} from '@schemas/user/user.schema';
+import {CreatedUser} from '@schemas/user/user.schema';
 
 /**
  * Create a login jwt for the user
  *
- * @param {User} user : the user information
+ * @param {CreatedUser} user : the user information
  */
-const createJwt = async (user: User): Promise<string> => {
+const createJwt = async (user: CreatedUser): Promise<string> => {
   // check jwt secret env variable
   if (!process.env.NEXT_PUBLIC_JWT_SECRET) {
     throw new Error('You must define an env variable with the name NEXT_PUBLIC_JWT_SECRET');
