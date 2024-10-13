@@ -24,7 +24,7 @@ export default function Navbar() {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   // get the user from the context
-  const user: User | null = useUserContext();
+  const user: User | null | undefined = useUserContext();
 
   /**
    * Toggle the user nav menu opening
