@@ -5,6 +5,7 @@ import {Infer} from '@vinejs/vine/types';
 /*                                  Schemas                                   */
 /* -------------------------------------------------------------------------- */
 
+// complete user
 const userSchema = vine.object({
   username: vine.string(),
   picture: vine.string(),
@@ -19,14 +20,27 @@ const userSchema = vine.object({
   games_three: vine.number(),
 });
 
+// created user in database
+const createdUserSchema = vine.object({
+  email: vine.string().email(),
+});
+
 /* -------------------------------------------------------------------------- */
 /*                                   Types                                    */
 /* -------------------------------------------------------------------------- */
 
+// complete user
 export type User = Infer<typeof userSchema>;
+
+// created user in database
+export type CreatedUser = Infer<typeof createdUserSchema>;
 
 /* -------------------------------------------------------------------------- */
 /*                                 Validators                                 */
 /* -------------------------------------------------------------------------- */
 
+// complete user
 export const userValidator = vine.compile(userSchema);
+
+// created user in database
+export const createdUserValidator = vine.compile(createdUserSchema);

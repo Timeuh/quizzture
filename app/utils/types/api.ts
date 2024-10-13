@@ -1,4 +1,4 @@
-import {User} from '@schemas/user/user.schema';
+import {CreatedUser} from '@schemas/user/user.schema';
 
 // error returned by api
 export interface ApiError {
@@ -15,7 +15,7 @@ export interface UserPayload {
     iat: number;
     iss: string;
     exp: number;
-  } & User;
+  } & CreatedUser;
   protectedHeader: {
     alg: string;
   };
