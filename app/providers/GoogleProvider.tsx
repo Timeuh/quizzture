@@ -6,11 +6,11 @@ type Props = {
 };
 
 /**
- * Global app provider regrouping all the utilities providers
+ * Provider for google auth
  *
  * @param {ReactNode} children : the children components
  */
-export default function GlobalProvider({children}: Props) {
+export default function GoogleProvider({children}: Props) {
   // get the google client id from the env
   const googleId = process.env.GOOGLE_CLIENT_ID || '';
 
