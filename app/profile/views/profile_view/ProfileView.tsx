@@ -13,13 +13,16 @@ import {
 import {ProfileScore} from '@utils/types/profile';
 import {useUserContext} from '@providers/UserProvider';
 import {User} from '@schemas/user/user.schema';
-import {useEffect, useState} from 'react';
 
 /**
  * Main view for the profile page
  */
 export default function ProfileView() {
-  const [displayedUser, setDisplayedUser] = useState<User>({
+  // get user from context
+  const userPayload: User | null | undefined = useUserContext();
+
+  // define user to display
+  const displayedUser: User = userPayload || {
     username: 'Username',
     picture: '/images/picture/logo1.png',
     password: '',
@@ -31,33 +34,17 @@ export default function ProfileView() {
     victories_three: 0,
     games_three: 0,
     highest_score: 0,
-  });
-  const [scores, setScores] = useState<ProfileScore[]>([
-    {title: 'Victoires', score: 0},
-    {title: 'Parties', score: 0},
-    {title: 'Victoires en chaîne', score: 0},
-    {title: 'Parties en chaîne', score: 0},
-    {title: 'Victoires en 3 vies', score: 0},
-    {title: 'Parties en 3 vies', score: 0},
-  ]);
+  };
 
-  // get user from context
-  const userPayload: User | null = useUserContext();
-
-  // watch for user data
-  useEffect(() => {
-    if (userPayload) {
-      setDisplayedUser(userPayload);
-      setScores([
-        {title: 'Victoires', score: userPayload.victories},
-        {title: 'Parties', score: userPayload.games},
-        {title: 'Victoires en chaîne', score: userPayload.victories_chain},
-        {title: 'Parties en chaîne', score: userPayload.games_chain},
-        {title: 'Victoires en 3 vies', score: userPayload.victories_three},
-        {title: 'Parties en 3 vies', score: userPayload.games_three},
-      ]);
-    }
-  }, [userPayload, displayedUser]);
+  // define scores to display
+  const scores: ProfileScore[] = [
+    {title: 'Victoires', score: displayedUser.victories},
+    {title: 'Parties', score: displayedUser.games},
+    {title: 'Victoires en chaîne', score: displayedUser.victories_chain},
+    {title: 'Parties en chaîne', score: displayedUser.games_chain},
+    {title: 'Victoires en 3 vies', score: displayedUser.victories_three},
+    {title: 'Parties en 3 vies', score: displayedUser.games_three},
+  ];
 
   return (
     <main className={vProfile_profile}>
@@ -73,7 +60,7 @@ export default function ProfileView() {
           />
           <h1 className={vProfile_username}>{displayedUser.username}</h1>
         </div>
-        <ScoreDisplay title={'Plus haut score'} score={0} isEven={true} showPoints />
+        <ScoreDisplay title={'Plus haut score'} score={displayedUser.highest_score} isEven={true} showPoints />
         <section className={vProfile_scoreContainer}>
           {scores.map((score: ProfileScore, index: number) => {
             return <ScoreDisplay key={index} title={score.title} score={score.score} isEven={index > 1 && index < 4} />;
