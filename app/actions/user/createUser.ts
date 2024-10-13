@@ -1,6 +1,6 @@
 'use server';
 
-import {User} from '@schemas/user/user.schema';
+import {CreatedUser} from '@schemas/user/user.schema';
 import {ApiError} from '@utils/types/api';
 
 /**
@@ -18,7 +18,7 @@ const createUser = async (
   email: string,
   password: string,
   type: 'email' | 'google',
-): Promise<User | ApiError> => {
+): Promise<CreatedUser | ApiError> => {
   return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
     method: 'POST',
     body: JSON.stringify({picture, username, email, password, type}),

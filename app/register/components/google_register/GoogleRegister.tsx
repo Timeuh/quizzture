@@ -4,11 +4,12 @@ import {CredentialResponse, GoogleLogin} from '@react-oauth/google';
 import {useState, useCallback} from 'react';
 import {cGoogleRegister_error, cGoogleRegister_register} from './GoogleRegister.styles';
 import readJwt from '@utils/functions/jwt/readJwt';
-import {GoogleAuth} from '@utils/types/api';
+import {ApiError, GoogleAuth} from '@utils/types/api';
 import createUser from '@actions/user/createUser';
 import {useRouter} from 'next/navigation';
 import createJwt from '@utils/functions/jwt/createJwt';
 import setUserCookie from '@actions/cookies/setUserCookie';
+import {CreatedUser} from '@schemas/user/user.schema';
 
 /**
  * Register the user with google auth
@@ -28,7 +29,13 @@ export default function GoogleRegister() {
       // decode google auth jwt
       const decoded: GoogleAuth = (await readJwt(credentialResponse.credential || '')) as GoogleAuth;
       // create the user
-      const creation = await createUser(decoded.picture, decoded.name, decoded.email, '', 'google');
+      const creation: CreatedUser | ApiError = await createUser(
+        decoded.picture,
+        decoded.name,
+        decoded.email,
+        '',
+        'google',
+      );
 
       // if the creation failed
       if ('error' in creation) {
@@ -44,7 +51,7 @@ export default function GoogleRegister() {
       }
 
       // create user jwt and set it in cookies
-      const userJwt = await createJwt(creation);
+      const userJwt: string = await createJwt(creation);
       setUserCookie(userJwt);
 
       // redirect to the home page

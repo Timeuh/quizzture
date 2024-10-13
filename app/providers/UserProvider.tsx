@@ -1,51 +1,33 @@
 'use client';
 
 import getUserCookie from '@actions/cookies/getUserCookie';
-import readUser from '@utils/functions/jwt/readUser';
-import {UserPayload} from '@utils/types/api';
-import {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
+import useUser from '@hooks/useUser';
+import {User} from '@schemas/user/user.schema';
+import {createContext, ReactNode, useContext} from 'react';
 
 type Props = {
   children: ReactNode;
 };
 
 // current user context
-const UserContext = createContext<UserPayload | null>(null);
+const UserContext = createContext<User | null | undefined>(null);
 
 /**
  * Provider for user context
  */
 export default function UserProvider({children}: Props) {
-  const [user, setUser] = useState<UserPayload | null>(null);
+  // get the user jwt from cookies
   const userJwt = getUserCookie();
 
-  /**
-   * Fetch the user from the jwt when the component mounts
-   */
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userResult = await readUser(userJwt);
-      if (userResult) {
-        setUser(userResult);
-      }
-    };
+  // get the user from the api
+  const {data: userInfos} = useUser(userJwt);
 
-    fetchUser();
-  }, [userJwt]);
-
-  /**
-   * Memoize the user to avoid re-rendering
-   */
-  const userMemo = useMemo(() => {
-    return user;
-  }, [user]);
-
-  return <UserContext.Provider value={userMemo}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={userInfos}>{children}</UserContext.Provider>;
 }
 
 /**
  * Hook to get a user from the context
  */
-export const useUserContext = (): UserPayload | null => {
+export const useUserContext = (): User | null | undefined => {
   return useContext(UserContext);
 };
