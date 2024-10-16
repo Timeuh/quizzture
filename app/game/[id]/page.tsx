@@ -1,4 +1,4 @@
-import {vstack} from '@styles/patterns';
+import LobbyView from './views/lobby_view/LobbyView';
 
 type Props = {
   params: {
@@ -10,21 +10,5 @@ type Props = {
  * Game page
  */
 export default function Game({params}: Props) {
-  const vGame_game = vstack({
-    gap: 4,
-    justifyContent: 'center',
-    h: 'screen',
-    w: 'full',
-    color: 'platinum.light',
-    bgGradient: 'to-b',
-    gradientFrom: 'platinum.dark',
-    gradientVia: 'platinum.dark',
-    gradientTo: 'nyanza.800',
-  });
-
-  return (
-    <main className={vGame_game}>
-      <h1>Game page {params.id}</h1>
-    </main>
-  );
+  return <LobbyView gameId={params.id} />;
 }
