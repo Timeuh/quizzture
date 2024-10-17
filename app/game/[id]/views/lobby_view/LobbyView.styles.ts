@@ -1,7 +1,7 @@
-import {vstack} from '@styles/patterns';
+import {hstack} from '@styles/patterns';
 
-export const vLobbyView_lobbyView = vstack({
-  gap: 4,
+export const vLobbyView_lobbyView = hstack({
+  gap: '10vw',
   justifyContent: 'center',
   h: 'screen',
   w: 'full',
