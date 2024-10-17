@@ -79,14 +79,6 @@ export default function GameConfiguration({gameId}: Props) {
     });
   };
 
-  /**
-   * Create game with current parameters
-   */
-  const handleSubmit = () => {
-    console.log('submission');
-    console.log(configuration);
-  };
-
   return (
     <section className={cGameConfiguration_container}>
       <section className={cGameConfiguration_infosContainer}>
@@ -296,7 +288,6 @@ export default function GameConfiguration({gameId}: Props) {
           </GameCategory>
         </section>
       </section>
-      <button onClick={handleSubmit}>Soumettre</button>
     </section>
   );
 }
