@@ -1,17 +1,11 @@
 'use client';
 
 import Chain from '@components/icons/Chain';
-import Copy from '@components/icons/Copy';
 import Heart from '@components/icons/Heart';
 import {FormEvent, useState} from 'react';
 import {
   cGameConfiguration_buttonsContainer,
   cGameConfiguration_container,
-  cGameConfiguration_copyGameCode,
-  cGameConfiguration_gameCode,
-  cGameConfiguration_gameCodeContainer,
-  cGameConfiguration_gameCodeDisplay,
-  cGameConfiguration_gameCodeTitle,
   cGameConfiguration_gameContainer,
   cGameConfiguration_gameModeButton,
   cGameConfiguration_gameModeContainer,
@@ -43,6 +37,7 @@ import Popcorn from '@components/icons/Popcorn';
 import BookMarked from '@components/icons/BookMarked';
 import {Gamemode} from '@utils/types/game';
 import rules from '@texts/lobby/rules';
+import GameCode from '../game_code/GameCode';
 
 type Props = {
   gameId: string;
@@ -79,15 +74,7 @@ export default function GameConfiguration({gameId}: Props) {
     <form onSubmit={handleSubmit} className={cGameConfiguration_container}>
       <section className={cGameConfiguration_infosContainer}>
         <section className={cGameConfiguration_gameContainer}>
-          <section className={cGameConfiguration_gameCodeContainer}>
-            <h2 className={cGameConfiguration_gameCodeTitle}>Code de la partie</h2>
-            <div className={cGameConfiguration_gameCode}>
-              <input type='text' value={gameId} readOnly className={cGameConfiguration_gameCodeDisplay} />
-              <button type='button' className={cGameConfiguration_copyGameCode}>
-                <Copy className={''} />
-              </button>
-            </div>
-          </section>
+          <GameCode gameId={gameId} />
           <section className={cGameConfiguration_gameModeContainer}>
             <h2 className={cGameConfiguration_gameModeTitle}>Mode de jeu</h2>
             <div className={cGameConfiguration_buttonsContainer}>
