@@ -41,6 +41,7 @@ import Music from '@components/icons/Music';
 import Clap from '@components/icons/Clap';
 import Popcorn from '@components/icons/Popcorn';
 import BookMarked from '@components/icons/BookMarked';
+import {Gamemode} from '@utils/types/game';
 
 type Props = {
   gameId: string;
@@ -52,14 +53,14 @@ type Props = {
  * @param {string} gameId : current game unique id
  */
 export default function GameConfiguration({gameId}: Props) {
-  const [gamemode, setGamemode] = useState<'three' | 'chain'>('three');
+  const [gamemode, setGamemode] = useState<Gamemode>('three');
 
   /**
    * Change current gamemode
    *
    * @param mode {'three' | 'chain'} : the new gamemode
    */
-  const changeGamemode = (mode: 'three' | 'chain') => {
+  const changeGamemode = (mode: Gamemode) => {
     setGamemode(mode);
   };
 
