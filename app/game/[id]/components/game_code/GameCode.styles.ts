@@ -12,6 +12,7 @@ export const cGameCode_title = css({
 
 export const cGameCode_codeContainer = hstack({
   gap: 4,
+  position: 'relative',
 });
 
 export const cGameCode_code = hstack({
@@ -37,3 +38,17 @@ export const cGameCode_copy = css({
   fontSize: 'lg',
   p: 1,
 });
+
+export const cGameCode_tooltip = (showTooltip: boolean) => {
+  return css({
+    position: 'absolute',
+    opacity: showTooltip ? 100 : 0,
+    top: -8,
+    right: -10,
+    p: 1,
+    bg: 'platinum.dark',
+    color: 'platinum.light',
+    borderRadius: 'sm',
+    transition: 'opacity 0.2s',
+  });
+};
