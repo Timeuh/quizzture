@@ -24,11 +24,19 @@ export const cProfileSelection_input = css({
 
 export const cProfileSelection_button = css({
   p: 2,
-  color: 'platinum.dark',
-  bg: 'nyanza.200',
+  color: {
+    _hover: 'platinum.light',
+    base: 'platinum.dark',
+  },
+  bg: {
+    _hover: 'nyanza.600',
+    base: 'nyanza.200',
+  },
   rounded: 'md',
   w: 'full',
   fontSize: 'lg',
+  cursor: 'pointer',
+  transition: 'all 0.5s',
 });
 
 export const cProfileSelection_image = circle({
