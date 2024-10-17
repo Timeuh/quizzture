@@ -42,6 +42,7 @@ import Clap from '@components/icons/Clap';
 import Popcorn from '@components/icons/Popcorn';
 import BookMarked from '@components/icons/BookMarked';
 import {Gamemode} from '@utils/types/game';
+import rules from '@texts/lobby/rules';
 
 type Props = {
   gameId: string;
@@ -126,10 +127,7 @@ export default function GameConfiguration({gameId}: Props) {
         </section>
         <section className={cGameConfiguration_rulesContainer}>
           <h2 className={cGameConfiguration_gameRulesTitle}>Règles</h2>
-          <p className={cGameConfiguration_gameRules}>
-            Vous jouez manche par manche, si vous vous trompez vous perdez une vie. Une fois 3 vies perdues vous êtes
-            éliminé.
-          </p>
+          <p className={cGameConfiguration_gameRules}>{rules[gamemode]}</p>
         </section>
       </section>
       <section className={cGameConfiguration_themesContainer}>
