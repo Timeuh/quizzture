@@ -20,3 +20,6 @@ export interface GameParameters {
   series: boolean;
   litteracy: boolean;
 }
+
+// game states in from loby to game start
+export type GameState = 'lobby' | 'players' | 'game';
