@@ -1,3 +1,5 @@
+'use client';
+
 import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 import ProfileSelection from '../../components/profile_selection/ProfileSelection';
 import {vLobbyView_lobbyView} from './LobbyView.styles';

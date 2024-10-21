@@ -1,5 +1,3 @@
-'use client';
-
 import Heart from '@components/icons/Heart';
 import {useState} from 'react';
 import {
