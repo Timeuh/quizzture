@@ -8,11 +8,19 @@ import {
 import {User} from '@schemas/user/user.schema';
 import {useUserContext} from '@providers/UserProvider';
 import {FormEvent} from 'react';
+import {socket} from '@socket';
+
+type Props = {
+  gameId: string;
+  togglePLayerList: () => void;
+};
 
 /**
  * User profile selection
+ *
+ * @param {string} gameId : current game unique id
  */
-export default function ProfileSelection() {
+export default function ProfileSelection({gameId, togglePLayerList}: Props) {
   // get the user from the context
   const user: User | null | undefined = useUserContext();
 
@@ -32,7 +40,13 @@ export default function ProfileSelection() {
     const username = formData.get('username') as string;
     const picture = formData.get('picture') as string;
 
-    console.log(username, picture);
+    // connect player to game socket
+    if (socket.connected) {
+      socket.emit('user_connected', {username, picture, gameId});
+    }
+
+    // toggle next game state
+    togglePLayerList();
   };
 
   return (
