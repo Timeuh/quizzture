@@ -12,18 +12,51 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-
   const io = new Server(httpServer);
 
-  io.on('connection', (socket) => {
-    console.log('> Un utilisateur est connecté');
+  // games list
+  const games = [];
 
+  // when a user connects
+  io.on('connection', (socket) => {
+    // when the user joins a game
     socket.on('user_connected', (data) => {
-      console.log(data.message);
+      // add the player to the game
+      games.push({...data, socketId: socket.id});
+
+      // get all players in the game
+      const gameId = data.gameId;
+      const players = games.filter((game) => {
+        return game.gameId === gameId;
+      });
+
+      // update players list for all players in the game
+      players.forEach((game) => {
+        io.to(game.socketId).emit('update_players', players);
+      });
     });
 
+    // when the user requests to get all players in the game
+    socket.on('get_players', (data) => {
+      // get all players in the game
+      const gameId = data.gameId;
+      const players = games.filter((game) => {
+        return game.gameId === gameId;
+      });
+
+      // send all players in the game to the user
+      socket.emit('receive_players', players);
+    });
+
+    // when the user leaves the game
     socket.on('disconnect', () => {
-      console.log('> Un utilisateur est déconnecté');
+      // remove the player from the game
+      const index = games.findIndex((game) => {
+        return game.socketId === socket.id;
+      });
+      if (index !== -1) {
+        games.splice(index, 1);
+      }
     });
   });
 
