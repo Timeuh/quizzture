@@ -16,10 +16,18 @@ export const cPLayerList_playersContainer = grid({
 });
 
 export const cPLayerList_button = css({
-  bg: 'nyanza.200',
-  color: 'platinum.dark',
+  color: {
+    _hover: 'platinum.light',
+    base: 'platinum.dark',
+  },
+  bg: {
+    _hover: 'nyanza.600',
+    base: 'nyanza.200',
+  },
   borderRadius: 'md',
   fontSize: 'xl',
   w: '20vw',
   p: 2,
+  transition: 'all 0.5s',
+  cursor: 'pointer',
 });
