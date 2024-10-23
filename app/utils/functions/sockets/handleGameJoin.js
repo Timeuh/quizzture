@@ -31,5 +31,8 @@ export const handleGameJoin = (games, data, io, socket) => {
     players: [{...data, socketId: socket.id, isHost: true}],
   });
 
+  // send player list to the player
+  socket.emit('update_players', [{...data, socketId: socket.id, isHost: true}]);
+
   return games;
 };
