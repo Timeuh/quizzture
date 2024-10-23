@@ -7,8 +7,9 @@ export const cPlayerDisplay_display = hstack({
   px: 2,
   py: 4,
   w: '15vw',
+  fontSize: 'lg',
 });
 
 export const cPlayerDisplay_picture = circle({
-  size: 12,
+  size: 14,
 });

@@ -4,11 +4,11 @@ import {circle, vstack} from '@styles/patterns';
 export const cProfileSelection_container = vstack({
   gap: 8,
   alignItems: 'center',
-  w: '15vw',
+  w: '1/3',
 });
 
 export const cProfileSelection_input = css({
-  w: 'full',
+  w: '1/2',
   p: 2,
   color: 'platinum.light',
   bg: 'platinum.dark',
@@ -33,7 +33,7 @@ export const cProfileSelection_button = css({
     base: 'nyanza.200',
   },
   rounded: 'md',
-  w: 'full',
+  w: '1/2',
   fontSize: 'lg',
   cursor: 'pointer',
   transition: 'all 0.5s',
