@@ -1,12 +1,17 @@
 import {socket} from '@socket';
 import {useEffect, useState} from 'react';
-import Image from 'next/image';
 import {Player} from '@utils/types/game';
+import PlayerDisplay from '@components/player_display/PlayerDisplay';
 
 type Props = {
   gameId: string;
 };
 
+/**
+ * Display every player in the game
+ *
+ * @param {string} gameId : the id of the game
+ */
 export default function PlayerList({gameId}: Props) {
   const [players, setPlayers] = useState<Player[]>([]);
 
@@ -29,13 +34,8 @@ export default function PlayerList({gameId}: Props) {
 
   return (
     <section>
-      {players?.map((player: Player, index: number) => {
-        return (
-          <div key={index}>
-            <Image src={player.picture} alt={'profile picture'} width={50} height={50} sizes={'100vw'} />
-            <h3>{player.username}</h3>
-          </div>
-        );
+      {players.map((player: Player, index: number) => {
+        return <PlayerDisplay key={index} player={player} />;
       })}
     </section>
   );
