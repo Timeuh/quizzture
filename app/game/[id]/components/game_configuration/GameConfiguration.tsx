@@ -1,5 +1,5 @@
 import Heart from '@components/icons/Heart';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   cGameConfiguration_buttonsContainer,
   cGameConfiguration_container,
@@ -32,10 +32,11 @@ import Music from '@components/icons/Music';
 import Clap from '@components/icons/Clap';
 import Popcorn from '@components/icons/Popcorn';
 import BookMarked from '@components/icons/BookMarked';
-import {GameParameters, Gamemode} from '@utils/types/game';
+import {GameParameters, GameParametersKey, Gamemode} from '@utils/types/game';
 import rules from '@texts/lobby/rules';
 import GameCode from '../game_code/GameCode';
 import Chain from '@components/icons/Chain';
+import {socket} from '@socket';
 
 type Props = {
   gameId: string;
@@ -66,6 +67,15 @@ export default function GameConfiguration({gameId}: Props) {
     litteracy: true,
   });
 
+  useEffect(() => {
+    if (socket.connected) {
+      // receive changing game configuration
+      socket.on('receive_gameconf', (gameconf: GameParameters) => {
+        setConfiguration(gameconf);
+      });
+    }
+  }, [gameId]);
+
   /**
    * Change current gamemode
    *
@@ -73,7 +83,33 @@ export default function GameConfiguration({gameId}: Props) {
    */
   const changeGamemode = (mode: Gamemode) => {
     setConfiguration((prev: GameParameters) => {
-      return {...prev, gamemode: mode};
+      const newConf = {...prev, gamemode: mode};
+      sendConfig(newConf);
+      return newConf;
+    });
+  };
+
+  /**
+   * Send the updated game configuration to the server
+   *
+   * @param {GameParameters} config : the updated game configuration
+   */
+  const sendConfig = (config: GameParameters) => {
+    if (!socket.connected) return;
+
+    socket.emit('send_gameconf', config);
+  };
+
+  /**
+   * Update the game configuration for 1 parameter
+   *
+   * @param param {GameParametersKey} : the parameter to update
+   */
+  const updateConfig = (param: GameParametersKey) => {
+    setConfiguration((prev: GameParameters) => {
+      const newConf = {...prev, [param]: !prev[param]};
+      sendConfig(newConf);
+      return newConf;
     });
   };
 
@@ -131,9 +167,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Sport'
             value={configuration.sport}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, sport: !prev.sport};
-              });
+              updateConfig('sport');
             }}
             isFirst
           >
@@ -143,9 +177,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Géographie'
             value={configuration.geography}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, geography: !prev.geography};
-              });
+              updateConfig('geography');
             }}
           >
             <Map className={cGameConfiguration_icon} />
@@ -154,9 +186,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Histoire'
             value={configuration.history}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, history: !prev.history};
-              });
+              updateConfig('history');
             }}
           >
             <Crown className={cGameConfiguration_icon} />
@@ -166,7 +196,9 @@ export default function GameConfiguration({gameId}: Props) {
             value={configuration.french}
             setValue={() => {
               setConfiguration((prev: GameParameters) => {
-                return {...prev, french: !prev.french};
+                const newConf = {...prev, french: !prev.french};
+                sendConfig(newConf);
+                return newConf;
               });
             }}
           >
@@ -176,9 +208,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Physique-Chimie'
             value={configuration.physics}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, physics: !prev.physics};
-              });
+              updateConfig('physics');
             }}
             isLastFirstRow
           >
@@ -188,9 +218,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Animaux'
             value={configuration.animals}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, animals: !prev.animals};
-              });
+              updateConfig('animals');
             }}
           >
             <Cat className={cGameConfiguration_icon} />
@@ -199,9 +227,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Anime'
             value={configuration.anime}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, anime: !prev.anime};
-              });
+              updateConfig('anime');
             }}
           >
             <Mask className={cGameConfiguration_icon} />
@@ -210,9 +236,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Manga'
             value={configuration.manga}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, manga: !prev.manga};
-              });
+              updateConfig('manga');
             }}
           >
             <BookA className={cGameConfiguration_icon} />
@@ -221,9 +245,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Célébrités'
             value={configuration.celebrities}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, celebrities: !prev.celebrities};
-              });
+              updateConfig('celebrities');
             }}
           >
             <Star className={cGameConfiguration_icon} />
@@ -232,9 +254,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Anglais'
             value={configuration.english}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, english: !prev.english};
-              });
+              updateConfig('english');
             }}
           >
             <Text className={cGameConfiguration_icon} />
@@ -243,9 +263,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Musique'
             value={configuration.music}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, music: !prev.music};
-              });
+              updateConfig('music');
             }}
             isFirstLastRow
           >
@@ -255,9 +273,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Cinéma'
             value={configuration.cinema}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, cinema: !prev.cinema};
-              });
+              updateConfig('cinema');
             }}
           >
             <Clap className={cGameConfiguration_icon} />
@@ -266,9 +282,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Séries'
             value={configuration.series}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, series: !prev.series};
-              });
+              updateConfig('series');
             }}
           >
             <Popcorn className={cGameConfiguration_icon} />
@@ -277,9 +291,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Littérature'
             value={configuration.litteracy}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                return {...prev, litteracy: !prev.litteracy};
-              });
+              updateConfig('litteracy');
             }}
           >
             <BookMarked className={cGameConfiguration_icon} />

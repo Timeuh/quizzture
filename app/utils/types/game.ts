@@ -21,6 +21,9 @@ export interface GameParameters {
   litteracy: boolean;
 }
 
+// keys of the game parameters
+export type GameParametersKey = keyof GameParameters;
+
 // game states in from loby to game start
 export type GameState = 'lobby' | 'players' | 'game';
 
