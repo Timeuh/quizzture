@@ -23,3 +23,11 @@ export interface GameParameters {
 
 // game states in from loby to game start
 export type GameState = 'lobby' | 'players' | 'game';
+
+// a player joining the game
+export interface Player {
+  gameId: string;
+  picture: string;
+  socketId: string;
+  username: string;
+}
