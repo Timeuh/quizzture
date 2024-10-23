@@ -32,3 +32,9 @@ export interface Player {
   username: string;
   isHost: boolean;
 }
+
+// context for the players list
+export interface PlayersListContext {
+  players: Player[];
+  isHost: boolean;
+}
