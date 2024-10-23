@@ -4,6 +4,7 @@ import {Server} from 'socket.io';
 import {handleGameJoin} from './app/utils/functions/sockets/handleGameJoin.js';
 import {handleDisconnection} from './app/utils/functions/sockets/handleDisconnection.js';
 import {handlePlayerListRequest} from './app/utils/functions/sockets/handlePlayerListRequest.js';
+import {handleGameconfChange} from './app/utils/functions/sockets/handleGameconfChange.js';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -30,6 +31,11 @@ app.prepare().then(() => {
     // when the user requests to get all players in the game
     socket.on('get_players', (data) => {
       handlePlayerListRequest(games, data, socket);
+    });
+
+    // when the game configuration changes
+    socket.on('send_gameconf', (data) => {
+      games = handleGameconfChange(games, data, io, socket);
     });
 
     // when the user leaves the game

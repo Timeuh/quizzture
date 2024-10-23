@@ -97,7 +97,7 @@ export default function GameConfiguration({gameId}: Props) {
   const sendConfig = (config: GameParameters) => {
     if (!socket.connected) return;
 
-    socket.emit('send_gameconf', config);
+    socket.emit('send_gameconf', {config, gameId});
   };
 
   /**
