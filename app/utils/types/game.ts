@@ -30,4 +30,5 @@ export interface Player {
   picture: string;
   socketId: string;
   username: string;
+  isHost: boolean;
 }
