@@ -7,18 +7,28 @@
  * @param socket : player socket
  */
 export const handleGameJoin = (games, data, io, socket) => {
-  // add the player to the game
-  games.push({...data, socketId: socket.id});
-
-  // get all players in the game
-  const gameId = data.gameId;
-  const players = games.filter((game) => {
-    return game.gameId === gameId;
+  // get game to join
+  const currentGame = games.find((game) => {
+    return game.gameId === data.gameId;
   });
 
-  // update players list for all players in the game
-  players.forEach((game) => {
-    io.to(game.socketId).emit('update_players', players);
+  // if the game exists
+  if (currentGame) {
+    // add the player to the game
+    currentGame.players.push({...data, socketId: socket.id});
+
+    // update players list for all players in the game
+    currentGame.players.forEach((player) => {
+      io.to(player.socketId).emit('update_players', currentGame.players);
+    });
+
+    return games;
+  }
+
+  // create the game with the first player
+  games.push({
+    gameId: data.gameId,
+    players: [{...data, socketId: socket.id}],
   });
 
   return games;

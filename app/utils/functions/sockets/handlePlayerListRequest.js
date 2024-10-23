@@ -6,12 +6,11 @@
  * @param socket : player socket
  */
 export const handlePlayerListRequest = (games, data, socket) => {
-  // get all players in the game
-  const gameId = data.gameId;
-  const players = games.filter((game) => {
-    return game.gameId === gameId;
+  // get user game
+  const currentGame = games.find((game) => {
+    return game.gameId === data.gameId;
   });
 
   // send all players in the game to the user
-  socket.emit('receive_players', players);
+  socket.emit('receive_players', currentGame.players);
 };

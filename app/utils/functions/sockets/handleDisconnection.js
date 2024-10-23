@@ -5,27 +5,31 @@
  * @param socket : player socket
  */
 export const handleDisconnection = (games, socket, io) => {
-  // get player index in game array
-  const index = games.findIndex((game) => {
-    return game.socketId === socket.id;
+  // get user game
+  const currentGame = games.find((game) => {
+    let found = false;
+
+    // look through every player in the game if it is the player that disconnected
+    game.players.forEach((player) => {
+      found = player.socketId === socket.id;
+    });
+
+    return found;
   });
 
-  // get the player
-  const player = games[index];
+  // get player index in game players array
+  const index = currentGame.players.findIndex((player) => {
+    return player.socketId === socket.id;
+  });
 
   // remove the player from the game
   if (index !== -1) {
-    games.splice(index, 1);
+    currentGame.players.splice(index, 1);
   }
 
-  // get all players in the same game
-  const players = games.filter((game) => {
-    return game.gameId === player.gameId;
-  });
-
   // update players list for all players in the game
-  players.forEach((game) => {
-    io.to(game.socketId).emit('update_players', players);
+  currentGame.players.forEach((player) => {
+    io.to(player.socketId).emit('update_players', currentGame.players);
   });
 
   return games;
