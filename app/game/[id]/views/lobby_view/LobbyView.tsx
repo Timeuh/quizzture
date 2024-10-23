@@ -6,6 +6,7 @@ import PlayerList from '../../components/player_list/PlayerList';
 import ProfileSelection from '../../components/profile_selection/ProfileSelection';
 import {vLobbyView_lobbyView} from './LobbyView.styles';
 import {GameState} from '@utils/types/game';
+import PlayersProvider from '../../providers/PlayersProvider';
 
 type Props = {
   gameId: string;
@@ -28,12 +29,14 @@ export default function LobbyView({gameId}: Props) {
 
   return (
     <main className={vLobbyView_lobbyView}>
-      <GameConfiguration gameId={gameId} />
-      {gameState === 'lobby' ? (
-        <ProfileSelection gameId={gameId} togglePLayerList={toggleNextState} />
-      ) : (
-        <PlayerList gameId={gameId} />
-      )}
+      <PlayersProvider gameId={gameId}>
+        <GameConfiguration gameId={gameId} />
+        {gameState === 'lobby' ? (
+          <ProfileSelection gameId={gameId} togglePLayerList={toggleNextState} />
+        ) : (
+          <PlayerList />
+        )}
+      </PlayersProvider>
     </main>
   );
 }

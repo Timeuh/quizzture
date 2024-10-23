@@ -1,42 +1,13 @@
-import {socket} from '@socket';
-import {useEffect, useState} from 'react';
 import {Player} from '@utils/types/game';
 import PlayerDisplay from '@components/player_display/PlayerDisplay';
 import {cPLayerList_button, cPLayerList_display, cPLayerList_playersContainer} from './PlayerList.styles';
-
-type Props = {
-  gameId: string;
-};
+import {usePlayersListContext} from '../../providers/PlayersProvider';
 
 /**
  * Display every player in the game
- *
- * @param {string} gameId : the id of the game
  */
-export default function PlayerList({gameId}: Props) {
-  const [players, setPlayers] = useState<Player[]>([]);
-
-  // get if player is the host
-  const isHost = players.some((player: Player) => {
-    return player.socketId === socket.id && player.isHost;
-  });
-
-  useEffect(() => {
-    if (socket.connected) {
-      // get already connected players
-      socket.emit('get_players', {gameId});
-
-      // receive already connected players
-      socket.on('receive_players', (players: Player[]) => {
-        setPlayers(players);
-      });
-
-      // update players list when a new player connects
-      socket.on('update_players', (players: Player[]) => {
-        setPlayers(players);
-      });
-    }
-  }, [gameId]);
+export default function PlayerList() {
+  const {players, isHost} = usePlayersListContext();
 
   return (
     <section className={cPLayerList_display}>
