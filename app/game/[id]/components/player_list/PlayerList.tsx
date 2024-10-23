@@ -2,6 +2,7 @@ import {socket} from '@socket';
 import {useEffect, useState} from 'react';
 import {Player} from '@utils/types/game';
 import PlayerDisplay from '@components/player_display/PlayerDisplay';
+import {cPLayerList_button, cPLayerList_display, cPLayerList_playersContainer} from './PlayerList.styles';
 
 type Props = {
   gameId: string;
@@ -33,10 +34,13 @@ export default function PlayerList({gameId}: Props) {
   }, [gameId]);
 
   return (
-    <section>
-      {players.map((player: Player, index: number) => {
-        return <PlayerDisplay key={index} player={player} />;
-      })}
+    <section className={cPLayerList_display}>
+      <div className={cPLayerList_playersContainer}>
+        {players.map((player: Player, index: number) => {
+          return <PlayerDisplay key={index} player={player} />;
+        })}
+      </div>
+      <button className={cPLayerList_button}>Démarrer</button>
     </section>
   );
 }
