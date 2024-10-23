@@ -4,8 +4,7 @@ export const cPlayerDisplay_display = hstack({
   gap: 4,
   bg: 'platinum.700',
   borderRadius: 'md',
-  px: 2,
-  py: 4,
+  p: 4,
   w: '15vw',
   fontSize: 'lg',
 });
