@@ -34,7 +34,7 @@ app.prepare().then(() => {
 
     // when the user leaves the game
     socket.on('disconnect', () => {
-      games = handleDisconnection(games, socket);
+      games = handleDisconnection(games, socket, io);
     });
   });
 
