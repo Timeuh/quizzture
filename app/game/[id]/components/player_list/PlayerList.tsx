@@ -16,6 +16,11 @@ type Props = {
 export default function PlayerList({gameId}: Props) {
   const [players, setPlayers] = useState<Player[]>([]);
 
+  // get if player is the host
+  const isHost = players.some((player: Player) => {
+    return player.socketId === socket.id && player.isHost;
+  });
+
   useEffect(() => {
     if (socket.connected) {
       // get already connected players
@@ -40,7 +45,7 @@ export default function PlayerList({gameId}: Props) {
           return <PlayerDisplay key={index} player={player} />;
         })}
       </div>
-      <button className={cPLayerList_button}>Démarrer</button>
+      {isHost && <button className={cPLayerList_button}>Démarrer</button>}
     </section>
   );
 }
