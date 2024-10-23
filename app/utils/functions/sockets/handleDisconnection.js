@@ -7,24 +7,33 @@
 export const handleDisconnection = (games, socket, io) => {
   // get user game
   const currentGame = games.find((game) => {
-    let found = false;
-
-    // look through every player in the game if it is the player that disconnected
-    game.players.forEach((player) => {
-      found = player.socketId === socket.id;
+    // check if the player is in the game
+    return game.players.some((player) => {
+      return player.socketId === socket.id;
     });
-
-    return found;
   });
+
+  // if there is no current game
+  if (!currentGame) {
+    return games;
+  }
 
   // get player index in game players array
   const index = currentGame.players.findIndex((player) => {
     return player.socketId === socket.id;
   });
 
+  // get current player
+  const player = currentGame.players[index];
+
   // remove the player from the game
   if (index !== -1) {
     currentGame.players.splice(index, 1);
+  }
+
+  // change host if the host disconnected
+  if (player.isHost) {
+    currentGame.players[0].isHost = true;
   }
 
   // update players list for all players in the game

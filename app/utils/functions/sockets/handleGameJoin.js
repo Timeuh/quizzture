@@ -15,7 +15,7 @@ export const handleGameJoin = (games, data, io, socket) => {
   // if the game exists
   if (currentGame) {
     // add the player to the game
-    currentGame.players.push({...data, socketId: socket.id});
+    currentGame.players.push({...data, socketId: socket.id, isHost: false});
 
     // update players list for all players in the game
     currentGame.players.forEach((player) => {
@@ -28,7 +28,7 @@ export const handleGameJoin = (games, data, io, socket) => {
   // create the game with the first player
   games.push({
     gameId: data.gameId,
-    players: [{...data, socketId: socket.id}],
+    players: [{...data, socketId: socket.id, isHost: true}],
   });
 
   return games;
