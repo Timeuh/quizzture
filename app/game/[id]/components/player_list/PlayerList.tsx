@@ -1,19 +1,14 @@
 import {socket} from '@socket';
 import {useEffect, useState} from 'react';
 import Image from 'next/image';
+import {Player} from '@utils/types/game';
 
 type Props = {
   gameId: string;
 };
 
-type Player = {
-  picture: string;
-  username: string;
-  gameId: string;
-};
-
 export default function PlayerList({gameId}: Props) {
-  const [players, setPlayers] = useState<[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
     if (socket.connected) {
@@ -21,12 +16,12 @@ export default function PlayerList({gameId}: Props) {
       socket.emit('get_players', {gameId});
 
       // receive already connected players
-      socket.on('receive_players', (players) => {
+      socket.on('receive_players', (players: Player[]) => {
         setPlayers(players);
       });
 
       // update players list when a new player connects
-      socket.on('update_players', (players) => {
+      socket.on('update_players', (players: Player[]) => {
         setPlayers(players);
       });
     }
@@ -34,17 +29,14 @@ export default function PlayerList({gameId}: Props) {
 
   return (
     <section>
-      <h2>Players</h2>
-      <ul>
-        {players?.map((player: Player, index: number) => {
-          return (
-            <li key={index}>
-              <Image src={player.picture} alt={'profile picture'} width={50} height={50} sizes={'100vw'} />
-              <span>{player.username}</span>
-            </li>
-          );
-        })}
-      </ul>
+      {players?.map((player: Player, index: number) => {
+        return (
+          <div key={index}>
+            <Image src={player.picture} alt={'profile picture'} width={50} height={50} sizes={'100vw'} />
+            <h3>{player.username}</h3>
+          </div>
+        );
+      })}
     </section>
   );
 }
