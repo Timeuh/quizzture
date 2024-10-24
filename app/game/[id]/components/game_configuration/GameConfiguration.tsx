@@ -37,6 +37,7 @@ import rules from '@texts/lobby/rules';
 import GameCode from '../game_code/GameCode';
 import Chain from '@components/icons/Chain';
 import {socket} from '@socket';
+import {usePlayersListContext} from '../../providers/PlayersProvider';
 
 type Props = {
   gameId: string;
@@ -67,6 +68,8 @@ export default function GameConfiguration({gameId}: Props) {
     litteracy: true,
   });
 
+  const {isHost} = usePlayersListContext();
+
   useEffect(() => {
     if (socket.connected) {
       // receive changing game configuration
@@ -82,6 +85,8 @@ export default function GameConfiguration({gameId}: Props) {
    * @param mode {'three' | 'chain'} : the new gamemode
    */
   const changeGamemode = (mode: Gamemode) => {
+    if (!isHost) return;
+
     setConfiguration((prev: GameParameters) => {
       const newConf = {...prev, gamemode: mode};
       sendConfig(newConf);
@@ -106,6 +111,8 @@ export default function GameConfiguration({gameId}: Props) {
    * @param param {GameParametersKey} : the parameter to update
    */
   const updateConfig = (param: GameParametersKey) => {
+    if (!isHost) return;
+
     setConfiguration((prev: GameParameters) => {
       const newConf = {...prev, [param]: !prev[param]};
       sendConfig(newConf);
@@ -195,11 +202,7 @@ export default function GameConfiguration({gameId}: Props) {
             name='Français'
             value={configuration.french}
             setValue={() => {
-              setConfiguration((prev: GameParameters) => {
-                const newConf = {...prev, french: !prev.french};
-                sendConfig(newConf);
-                return newConf;
-              });
+              updateConfig('french');
             }}
           >
             <Languages className={cGameConfiguration_icon} />
