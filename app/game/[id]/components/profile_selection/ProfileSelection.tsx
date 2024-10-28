@@ -9,6 +9,7 @@ import {User} from '@schemas/user/user.schema';
 import {useUserContext} from '@providers/UserProvider';
 import {FormEvent} from 'react';
 import {socket} from '@socket';
+import AvatarSelection from '../avatar_selection/AvatarSelection';
 
 type Props = {
   gameId: string;
@@ -51,14 +52,21 @@ export default function ProfileSelection({gameId, togglePLayerList}: Props) {
 
   return (
     <form className={cProfileSelection_container} onSubmit={handleSubmit}>
-      <Image
-        src={user ? user.picture : '/images/picture/logo1.png'}
-        alt={'profile picture'}
-        width={50}
-        height={50}
-        sizes={'100vw'}
-        className={cProfileSelection_image}
-      />
+      {user ? (
+        <>
+          <Image
+            src={user.picture}
+            alt={'profile picture'}
+            width={50}
+            height={50}
+            sizes={'100vw'}
+            className={cProfileSelection_image}
+          />
+          <input name='picture' type='text' value={user.picture} readOnly hidden />
+        </>
+      ) : (
+        <AvatarSelection />
+      )}
       <input
         name='username'
         type='text'
@@ -66,7 +74,6 @@ export default function ProfileSelection({gameId, togglePLayerList}: Props) {
         defaultValue={user ? user.username : ''}
         className={cProfileSelection_input}
       />
-      <input name='picture' type='text' value={user ? user.picture : '/images/picture/logo1.png'} readOnly hidden />
       <button type='submit' className={cProfileSelection_button}>
         Rejoindre
       </button>
