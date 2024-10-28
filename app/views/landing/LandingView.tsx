@@ -1,3 +1,5 @@
+'use client';
+
 import Gamepad from '@components/icons/Gamepad';
 import Join from '@components/icons/Join';
 import {
@@ -15,11 +17,25 @@ import {
 } from './LandingView.styles';
 import Image from 'next/image';
 import Lines from '@components/lines/Lines';
+import {useRouter} from 'next/navigation';
+import generateRandomId from '@utils/functions/game/generateRandomId';
 
 /**
  * Landing view in home page
  */
 export default function LandingView() {
+  const router = useRouter();
+
+  /**
+   * Create a new game id and redirect to the game page
+   */
+  const createGame = () => {
+    // genrate a random game id
+    const gameId = generateRandomId();
+    // redirect to the game page
+    router.push(`/game/${gameId}`);
+  };
+
   return (
     <main className={vLanding_landing}>
       <div className={vLanding_titleContainer}>
@@ -43,7 +59,7 @@ export default function LandingView() {
       </div>
       <h2 className={vLanding_subtitle}>Mesurez votre culture et montrez qui est le plus fort !</h2>
       <div className={vLanding_buttonsContainer}>
-        <button className={vLanding_playButton}>
+        <button className={vLanding_playButton} onClick={createGame}>
           <Gamepad className={vLanding_gamepad} />
           Créer une partie
         </button>
