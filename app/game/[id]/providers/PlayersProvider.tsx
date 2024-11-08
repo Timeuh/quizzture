@@ -1,7 +1,7 @@
 'use client';
 
 import {socket} from '@socket';
-import {Player, PlayersListContext} from '@utils/types/game';
+import {GameState, Player, PlayersListContext} from '@utils/types/game';
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 
 type Props = {
@@ -21,39 +21,60 @@ const PlayersContext = createContext<PlayersListContext | null>(null);
 export default function PlayersProvider({children, gameId}: Props) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isHost, setIsHost] = useState<boolean>(false);
+  const [gameState, setGameState] = useState<GameState>('lobby');
 
   useEffect(() => {
-    if (socket.connected) {
-      // get already connected players
-      socket.emit('get_players', {gameId});
+    if (!socket.connected) return;
 
-      // receive already connected players
-      socket.on('receive_players', (players: Player[]) => {
-        setPlayers(players);
+    // get already connected players
+    socket.emit('get_players', {gameId});
 
-        // get if current player is the host
-        const isHost = players.some((player: Player) => {
-          return player.socketId === socket.id && player.isHost;
-        });
+    // receive already connected players
+    socket.on('receive_players', (players: Player[]) => {
+      setPlayers(players);
 
-        setIsHost(isHost);
+      // get if current player is the host
+      const isHost = players.some((player: Player) => {
+        return player.socketId === socket.id && player.isHost;
       });
 
-      // update players list when a new player connects
-      socket.on('update_players', (players: Player[]) => {
-        setPlayers(players);
+      setIsHost(isHost);
+    });
 
-        // get if current player is the host
-        const isHost = players.some((player: Player) => {
-          return player.socketId === socket.id && player.isHost;
-        });
+    // update players list when a new player connects
+    socket.on('update_players', (players: Player[]) => {
+      setPlayers(players);
 
-        setIsHost(isHost);
+      // get if current player is the host
+      const isHost = players.some((player: Player) => {
+        return player.socketId === socket.id && player.isHost;
       });
-    }
+
+      setIsHost(isHost);
+    });
+
+    // update current game state
+    socket.on('update_gamestate', (gameState: GameState) => {
+      setGameState(gameState);
+    });
   }, [gameId]);
 
-  return <PlayersContext.Provider value={{players, isHost}}>{children}</PlayersContext.Provider>;
+  /**
+   * Change the game state on the server
+   *
+   * @param {GameState} gameState : the new game state
+   */
+  const changeGameState = (gameState: GameState) => {
+    if (!socket.connected) return;
+
+    socket.emit('change_gamestate', {gameId, gameState});
+  };
+
+  return (
+    <PlayersContext.Provider value={{players, isHost, gameState, changeGameState, setGameState}}>
+      {children}
+    </PlayersContext.Provider>
+  );
 }
 
 /**

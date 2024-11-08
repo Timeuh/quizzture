@@ -40,4 +40,14 @@ export interface Player {
 export interface PlayersListContext {
   players: Player[];
   isHost: boolean;
+  gameState: GameState;
+  changeGameState: (gameState: GameState) => void;
+  setGameState: (gameState: GameState) => void;
+}
+
+// game stored in the server
+export interface Game {
+  gameId: string;
+  gameState: GameState;
+  players: Player[];
 }
