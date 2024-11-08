@@ -1,3 +1,5 @@
+'use client';
+
 import Heart from '@components/icons/Heart';
 import {useEffect, useState} from 'react';
 import {

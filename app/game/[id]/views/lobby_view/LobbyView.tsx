@@ -1,12 +1,11 @@
 'use client';
 
 import {useState} from 'react';
-import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 import PlayerList from '../../components/player_list/PlayerList';
 import ProfileSelection from '../../components/profile_selection/ProfileSelection';
 import {vLobbyView_lobbyView} from './LobbyView.styles';
 import {GameState} from '@utils/types/game';
-import PlayersProvider from '../../providers/PlayersProvider';
+import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 
 type Props = {
   gameId: string;
@@ -27,16 +26,24 @@ export default function LobbyView({gameId}: Props) {
     setGameState('players');
   };
 
-  return (
-    <main className={vLobbyView_lobbyView}>
-      <PlayersProvider gameId={gameId}>
-        <GameConfiguration gameId={gameId} />
-        {gameState === 'lobby' ? (
+  switch (gameState) {
+    case 'lobby':
+      return (
+        <section className={vLobbyView_lobbyView}>
+          <GameConfiguration gameId={gameId} />
           <ProfileSelection gameId={gameId} togglePLayerList={toggleNextState} />
-        ) : (
+        </section>
+      );
+
+    case 'players':
+      return (
+        <section className={vLobbyView_lobbyView}>
+          <GameConfiguration gameId={gameId} />
           <PlayerList />
-        )}
-      </PlayersProvider>
-    </main>
-  );
+        </section>
+      );
+
+    default:
+      return <></>;
+  }
 }
