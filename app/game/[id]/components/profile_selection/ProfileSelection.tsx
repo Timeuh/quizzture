@@ -10,10 +10,10 @@ import {useUserContext} from '@providers/UserProvider';
 import {FormEvent} from 'react';
 import {socket} from '@socket';
 import AvatarSelection from '../avatar_selection/AvatarSelection';
+import {usePlayersListContext} from '../../providers/PlayersProvider';
 
 type Props = {
   gameId: string;
-  togglePLayerList: () => void;
 };
 
 /**
@@ -21,9 +21,11 @@ type Props = {
  *
  * @param {string} gameId : current game unique id
  */
-export default function ProfileSelection({gameId, togglePLayerList}: Props) {
+export default function ProfileSelection({gameId}: Props) {
   // get the user from the context
   const user: User | null | undefined = useUserContext();
+
+  const {setGameState} = usePlayersListContext();
 
   /**
    * Handle user participation
@@ -47,7 +49,7 @@ export default function ProfileSelection({gameId, togglePLayerList}: Props) {
     }
 
     // toggle next game state
-    togglePLayerList();
+    setGameState('players');
   };
 
   return (

@@ -1,12 +1,11 @@
 'use client';
 
-import {useState} from 'react';
 import PlayerList from '../../components/player_list/PlayerList';
 import ProfileSelection from '../../components/profile_selection/ProfileSelection';
 import {vGameView_container} from './GameView.styles';
-import {GameState} from '@utils/types/game';
 import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 import QuestionView from '../question_view/QuestionView';
+import {usePlayersListContext} from '../../providers/PlayersProvider';
 
 type Props = {
   gameId: string;
@@ -18,21 +17,14 @@ type Props = {
  * @param {string} gameId : current game unique id
  */
 export default function GameView({gameId}: Props) {
-  const [gameState, setGameState] = useState<GameState>('lobby');
-
-  /**
-   * Toggle players game state after lobby
-   */
-  const togglePlayerView = () => {
-    setGameState('players');
-  };
+  const {gameState} = usePlayersListContext();
 
   switch (gameState) {
     case 'lobby':
       return (
         <section className={vGameView_container}>
           <GameConfiguration gameId={gameId} />
-          <ProfileSelection gameId={gameId} togglePLayerList={togglePlayerView} />
+          <ProfileSelection gameId={gameId} />
         </section>
       );
 

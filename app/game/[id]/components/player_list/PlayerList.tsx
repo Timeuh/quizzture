@@ -7,7 +7,7 @@ import {usePlayersListContext} from '../../providers/PlayersProvider';
  * Display every player in the game
  */
 export default function PlayerList() {
-  const {players, isHost} = usePlayersListContext();
+  const {players, isHost, changeGameState} = usePlayersListContext();
 
   return (
     <section className={cPLayerList_display}>
@@ -16,7 +16,16 @@ export default function PlayerList() {
           return <PlayerDisplay key={index} player={player} />;
         })}
       </div>
-      {isHost && <button className={cPLayerList_button}>Démarrer</button>}
+      {isHost && (
+        <button
+          className={cPLayerList_button}
+          onClick={() => {
+            return changeGameState('question');
+          }}
+        >
+          Démarrer
+        </button>
+      )}
     </section>
   );
 }
