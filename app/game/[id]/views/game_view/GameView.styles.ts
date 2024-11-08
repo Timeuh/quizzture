@@ -1,6 +1,6 @@
 import {hstack} from '@styles/patterns';
 
-export const vLobbyView_lobbyView = hstack({
+export const vGameView_container = hstack({
   gap: '10vw',
   justifyContent: 'center',
   h: 'screen',

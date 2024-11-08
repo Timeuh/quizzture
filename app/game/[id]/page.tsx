@@ -1,4 +1,4 @@
-import LobbyView from './views/lobby_view/LobbyView';
+import GameView from './views/game_view/GameView';
 
 type Props = {
   params: {
@@ -10,5 +10,5 @@ type Props = {
  * Game page
  */
 export default function Game({params}: Props) {
-  return <LobbyView gameId={params.id} />;
+  return <GameView gameId={params.id} />;
 }
