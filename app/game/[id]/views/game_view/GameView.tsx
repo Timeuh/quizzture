@@ -6,6 +6,7 @@ import ProfileSelection from '../../components/profile_selection/ProfileSelectio
 import {vGameView_container} from './GameView.styles';
 import {GameState} from '@utils/types/game';
 import GameConfiguration from '../../components/game_configuration/GameConfiguration';
+import QuestionView from '../question_view/QuestionView';
 
 type Props = {
   gameId: string;
@@ -22,7 +23,7 @@ export default function GameView({gameId}: Props) {
   /**
    * Toggle players game state after lobby
    */
-  const toggleNextState = () => {
+  const togglePlayerView = () => {
     setGameState('players');
   };
 
@@ -31,7 +32,7 @@ export default function GameView({gameId}: Props) {
       return (
         <section className={vGameView_container}>
           <GameConfiguration gameId={gameId} />
-          <ProfileSelection gameId={gameId} togglePLayerList={toggleNextState} />
+          <ProfileSelection gameId={gameId} togglePLayerList={togglePlayerView} />
         </section>
       );
 
@@ -40,6 +41,13 @@ export default function GameView({gameId}: Props) {
         <section className={vGameView_container}>
           <GameConfiguration gameId={gameId} />
           <PlayerList />
+        </section>
+      );
+
+    case 'question':
+      return (
+        <section className={vGameView_container}>
+          <QuestionView />
         </section>
       );
 
