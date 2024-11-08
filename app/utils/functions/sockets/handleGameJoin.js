@@ -28,6 +28,7 @@ export const handleGameJoin = (games, data, io, socket) => {
   // create the game with the first player
   games.push({
     gameId: data.gameId,
+    gameState: 'lobby',
     players: [{...data, socketId: socket.id, isHost: true}],
   });
 
