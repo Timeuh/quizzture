@@ -25,7 +25,7 @@ export interface GameParameters {
 export type GameParametersKey = keyof GameParameters;
 
 // game states in from loby to game start
-export type GameState = 'lobby' | 'players' | 'game';
+export type GameState = 'lobby' | 'players' | 'question' | 'answer' | 'end';
 
 // a player joining the game
 export interface Player {
