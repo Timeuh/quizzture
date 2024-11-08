@@ -6,6 +6,7 @@ import {vGameView_container} from './GameView.styles';
 import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 import QuestionView from '../question_view/QuestionView';
 import {useGameContext} from '../../providers/GameProvider';
+import AnswersView from '../answers_view/AnswersView';
 
 type Props = {
   gameId: string;
@@ -40,6 +41,13 @@ export default function GameView({gameId}: Props) {
       return (
         <section className={vGameView_container}>
           <QuestionView />
+        </section>
+      );
+
+    case 'answer':
+      return (
+        <section className={vGameView_container}>
+          <AnswersView />
         </section>
       );
 
