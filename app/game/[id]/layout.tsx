@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import PlayersProvider from './providers/PlayersProvider';
+import GameProvider from './providers/GameProvider';
 
 type Props = {
   params: {
@@ -14,7 +14,7 @@ type Props = {
 export default function Game({params, children}: Props) {
   return (
     <main>
-      <PlayersProvider gameId={params.id}>{children}</PlayersProvider>
+      <GameProvider gameId={params.id}>{children}</GameProvider>
     </main>
   );
 }

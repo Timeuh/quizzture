@@ -10,7 +10,7 @@ import {useUserContext} from '@providers/UserProvider';
 import {FormEvent} from 'react';
 import {socket} from '@socket';
 import AvatarSelection from '../avatar_selection/AvatarSelection';
-import {usePlayersListContext} from '../../providers/PlayersProvider';
+import {useGameContext} from '../../providers/GameProvider';
 
 type Props = {
   gameId: string;
@@ -25,7 +25,7 @@ export default function ProfileSelection({gameId}: Props) {
   // get the user from the context
   const user: User | null | undefined = useUserContext();
 
-  const {setGameState} = usePlayersListContext();
+  const {setGameState} = useGameContext();
 
   /**
    * Handle user participation

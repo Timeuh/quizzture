@@ -37,7 +37,7 @@ export interface Player {
 }
 
 // context for the players list
-export interface PlayersListContext {
+export interface GameContext {
   players: Player[];
   isHost: boolean;
   gameState: GameState;

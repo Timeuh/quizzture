@@ -5,7 +5,7 @@ import ProfileSelection from '../../components/profile_selection/ProfileSelectio
 import {vGameView_container} from './GameView.styles';
 import GameConfiguration from '../../components/game_configuration/GameConfiguration';
 import QuestionView from '../question_view/QuestionView';
-import {usePlayersListContext} from '../../providers/PlayersProvider';
+import {useGameContext} from '../../providers/GameProvider';
 
 type Props = {
   gameId: string;
@@ -17,7 +17,7 @@ type Props = {
  * @param {string} gameId : current game unique id
  */
 export default function GameView({gameId}: Props) {
-  const {gameState} = usePlayersListContext();
+  const {gameState} = useGameContext();
 
   switch (gameState) {
     case 'lobby':

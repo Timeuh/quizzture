@@ -39,7 +39,7 @@ import rules from '@texts/lobby/rules';
 import GameCode from '../game_code/GameCode';
 import Chain from '@components/icons/Chain';
 import {socket} from '@socket';
-import {usePlayersListContext} from '../../providers/PlayersProvider';
+import {useGameContext} from '../../providers/GameProvider';
 
 type Props = {
   gameId: string;
@@ -70,7 +70,7 @@ export default function GameConfiguration({gameId}: Props) {
     litteracy: true,
   });
 
-  const {isHost} = usePlayersListContext();
+  const {isHost} = useGameContext();
 
   useEffect(() => {
     if (socket.connected) {

@@ -1,7 +1,7 @@
 'use client';
 
 import {socket} from '@socket';
-import {GameState, Player, PlayersListContext} from '@utils/types/game';
+import {GameState, Player, GameContext} from '@utils/types/game';
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 
 type Props = {
@@ -9,16 +9,16 @@ type Props = {
   gameId: string;
 };
 
-// context for the players list
-const PlayersContext = createContext<PlayersListContext | null>(null);
+// context for the game
+const CurrentGameContext = createContext<GameContext | null>(null);
 
 /**
- * Context provider for the players list of the game
+ * Context provider for the game
  *
  * @param {ReactNode} children : the children components
  * @param {string} gameId : the id of the game
  */
-export default function PlayersProvider({children, gameId}: Props) {
+export default function GameProvider({children, gameId}: Props) {
   const [players, setPlayers] = useState<Player[]>([]);
   const [isHost, setIsHost] = useState<boolean>(false);
   const [gameState, setGameState] = useState<GameState>('lobby');
@@ -71,19 +71,19 @@ export default function PlayersProvider({children, gameId}: Props) {
   };
 
   return (
-    <PlayersContext.Provider value={{players, isHost, gameState, changeGameState, setGameState}}>
+    <CurrentGameContext.Provider value={{players, isHost, gameState, changeGameState, setGameState}}>
       {children}
-    </PlayersContext.Provider>
+    </CurrentGameContext.Provider>
   );
 }
 
 /**
- * Hook to use the players list context
+ * Hook to use the game context
  */
-export const usePlayersListContext = (): PlayersListContext => {
-  const context = useContext(PlayersContext);
+export const useGameContext = (): GameContext => {
+  const context = useContext(CurrentGameContext);
   if (context === null) {
-    throw new Error('usePlayersListContext must be used within a PlayersProvider');
+    throw new Error('useGameContext must be used within a GameProvider');
   }
   return context;
 };

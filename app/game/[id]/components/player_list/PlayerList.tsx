@@ -1,13 +1,13 @@
 import {Player} from '@utils/types/game';
 import PlayerDisplay from '@components/player_display/PlayerDisplay';
 import {cPLayerList_button, cPLayerList_display, cPLayerList_playersContainer} from './PlayerList.styles';
-import {usePlayersListContext} from '../../providers/PlayersProvider';
+import {useGameContext} from '../../providers/GameProvider';
 
 /**
  * Display every player in the game
  */
 export default function PlayerList() {
-  const {players, isHost, changeGameState} = usePlayersListContext();
+  const {players, isHost, changeGameState} = useGameContext();
 
   return (
     <section className={cPLayerList_display}>
