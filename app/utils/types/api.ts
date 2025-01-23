@@ -45,3 +45,10 @@ export interface ApiParams {
     id: string;
   };
 }
+
+// api collection of data
+export interface ApiCollection<T> {
+  type: 'collection';
+  count: number;
+  items: T[];
+}
