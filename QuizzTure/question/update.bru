@@ -1,0 +1,19 @@
+meta {
+  name: update
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:57001/api/questions/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "heading": "Quel est le pays des animes ?",
+    "category_id": 1,
+    "answer": "Le Japon"
+  }
+}
