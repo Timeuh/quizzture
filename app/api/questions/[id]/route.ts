@@ -1,4 +1,4 @@
-import {Question, questionValidator} from '@schemas/questions/questions.schema';
+import {Question, questionCreationValidator} from '@schemas/questions/questions.schema';
 import {HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND} from '@utils/constants/api';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
@@ -52,7 +52,7 @@ export async function PUT(request: Request, apiParams: ApiParams): Promise<Respo
     const body = await request.json();
 
     // verify no data is missing
-    const questionToUpdate = await questionValidator.validate(body);
+    const questionToUpdate = await questionCreationValidator.validate(body);
 
     // update the question in the database
     const updatedQuestion: Question = await prisma.question.update({
