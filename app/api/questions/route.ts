@@ -1,5 +1,6 @@
 import {Question, questionCreationValidator} from '@schemas/questions/questions.schema';
-import {HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND, HTTP_CREATED} from '@utils/constants/api';
+import {HTTP_NOT_FOUND, MSG_NOT_FOUND, HTTP_CREATED} from '@utils/constants/api';
+import sendCollectionResponse from '@utils/functions/api/sendCollectionResponse';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
 import {prisma} from '@utils/prisma/client';
@@ -30,7 +31,7 @@ export async function GET(_request: Request): Promise<Response> {
       );
     }
 
-    return sendJsonResponse<Question[]>(questions, HTTP_OK);
+    return sendCollectionResponse<Question>(questions);
   } catch (error: unknown) {
     return sendErrorResponse(error);
   }
