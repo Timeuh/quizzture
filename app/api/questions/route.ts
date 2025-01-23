@@ -1,16 +1,9 @@
-import {Question} from '@schemas/questions/questions.schema';
-import {
-  HTTP_NOT_FOUND,
-  HTTP_OK,
-  MSG_NOT_FOUND,
-  HTTP_BAD_REQUEST,
-  HTTP_CREATED,
-  MSG_MISSING_DATA,
-} from '@utils/constants/api';
+import {Question, questionCreationValidator} from '@schemas/questions/questions.schema';
+import {HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND, HTTP_CREATED} from '@utils/constants/api';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
 import {prisma} from '@utils/prisma/client';
-import {ApiError, ApiParams} from '@utils/types/api';
+import {ApiError} from '@utils/types/api';
 
 /**
  * Get questions from the database
@@ -54,26 +47,15 @@ export async function POST(request: Request): Promise<Response> {
     // get data from request
     const body: Question = await request.json();
 
-    // if any field is missing, return an error
-    if (!body.heading || !body.category_id || !body.answer) {
-      return sendJsonResponse<ApiError>(
-        {
-          error: {
-            code: HTTP_BAD_REQUEST,
-            message: MSG_MISSING_DATA,
-            details: 'Missing required fields: heading, category_id, answer',
-          },
-        },
-        HTTP_BAD_REQUEST,
-      );
-    }
+    // validate the provided data
+    const validatedQuestion = await questionCreationValidator.validate(body);
 
     // create a new question in the database
     const newQuestion: Question = await prisma.question.create({
       data: {
-        heading: body.heading,
-        answer: body.answer,
-        category_id: body.category_id,
+        heading: validatedQuestion.heading,
+        answer: validatedQuestion.answer,
+        category_id: validatedQuestion.category_id,
       },
     });
 
