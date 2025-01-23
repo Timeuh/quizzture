@@ -44,3 +44,6 @@ export const MSG_FOREIGN_KEY_ERROR = 'Foreign key error';
 
 // invalid image name
 export const MSG_INVALID_IMAGE = 'Invalid image name';
+
+// missing data in request
+export const MSG_MISSING_DATA = 'Missing data for this request';

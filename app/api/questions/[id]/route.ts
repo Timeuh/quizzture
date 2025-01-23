@@ -1,18 +1,26 @@
-import { Question } from '@schemas/questions/questions.schema';
-import { HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND, HTTP_BAD_REQUEST, MSG_SERVER_ERROR, HTTP_CREATED } from '@utils/constants/api';
+import {Question, questionValidator} from '@schemas/questions/questions.schema';
+import {HTTP_NOT_FOUND, HTTP_OK, MSG_NOT_FOUND} from '@utils/constants/api';
 import sendErrorResponse from '@utils/functions/api/sendErrorResponse';
 import sendJsonResponse from '@utils/functions/api/sendJsonResponse';
-import { prisma } from '@utils/prisma/client';
-import { ApiError, ApiParams } from '@utils/types/api';
+import {prisma} from '@utils/prisma/client';
+import {ApiError, ApiParams} from '@utils/types/api';
 
+/**
+ * Get a question by its id
+ *
+ * @param {Request} request : the request object
+ * @param {ApiParams} apiParams : the request parameters
+ */
 export async function GET(_request: Request, apiParams: ApiParams): Promise<Response> {
   try {
-    const question : Question | null = await prisma.question.findFirst({
+    // get the question with the given id from the database
+    const question: Question | null = await prisma.question.findFirst({
       where: {
         id: Number(apiParams.params.id),
       },
     });
 
+    // if the question does not exist, return an error
     if (!question) {
       return sendJsonResponse<ApiError>(
         {
@@ -32,57 +40,53 @@ export async function GET(_request: Request, apiParams: ApiParams): Promise<Resp
   }
 }
 
+/**
+ * Update a question
+ *
+ * @param {Request} request : the request object
+ * @param {ApiParams} apiParams : the request parameters
+ */
 export async function PUT(request: Request, apiParams: ApiParams): Promise<Response> {
   try {
+    // get update data
     const body = await request.json();
 
-    const updateData: Partial<Question> = {};
+    // verify no data is missing
+    const questionToUpdate = await questionValidator.validate(body);
 
-    if (body.heading) updateData.heading = body.heading;
-    if (body.answer) updateData.answer = body.answer;
-    if (body.category_id) updateData.category_id = body.category_id;
-
-    if (Object.keys(updateData).length === 0) {
-      return sendJsonResponse<ApiError>(
-        {
-          error: {
-            code: HTTP_BAD_REQUEST,
-            message: MSG_SERVER_ERROR,
-            details: 'At least one of heading, answer, or category_id is required to update',
-          },
-        },
-        HTTP_BAD_REQUEST,
-      );
-    }
-
-    const updatedQuestion : Question = await prisma.question.update({
+    // update the question in the database
+    const updatedQuestion: Question = await prisma.question.update({
       where: {
         id: Number(apiParams.params.id),
       },
-      data: updateData, 
+      data: questionToUpdate,
     });
 
-    // Retourner la question mise à jour
+    // return the updated question
     return sendJsonResponse<Question>(updatedQuestion, HTTP_OK);
   } catch (error: unknown) {
     return sendErrorResponse(error);
   }
 }
 
-
-
+/**
+ * Delete a question from the database
+ *
+ * @param {Request} request : the request object
+ * @param {ApiParams} apiParams : the request parameters
+ */
 export async function DELETE(_request: Request, apiParams: ApiParams): Promise<Response> {
   try {
-    const deletedQuestion : Question = await prisma.question.delete({
+    // delete the question with the given id from the database
+    const deletedQuestion: Question = await prisma.question.delete({
       where: {
         id: Number(apiParams.params.id),
       },
     });
 
-    return sendJsonResponse<String>('Question deleted successfully', HTTP_OK);
-
+    // return the deleted question
+    return sendJsonResponse<Question>(deletedQuestion, HTTP_OK);
   } catch (error: unknown) {
     return sendErrorResponse(error);
   }
 }
-
