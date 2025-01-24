@@ -13,7 +13,7 @@ export default function PlayerList() {
     <section className={cPLayerList_display}>
       <div className={cPLayerList_playersContainer}>
         {players.map((player: Player, index: number) => {
-          return <PlayerDisplay key={index} player={player} />;
+          return <PlayerDisplay background='waiting' key={index} player={player} />;
         })}
       </div>
       {isHost && (
