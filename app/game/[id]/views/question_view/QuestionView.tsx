@@ -4,6 +4,7 @@ import PlayerDisplay from '@components/player_display/PlayerDisplay';
 import {vQuestionView_container, vQuestionView_header, vQuestionView_questionCount} from './QuestionView.styles';
 import Timer from '@components/timer/Timer';
 import QuestionDisplay from '../../components/question_display/QuestionDisplay';
+import AnswerZone from '../../components/answer_zone/AnswerZone';
 
 /**
  * Display current question
@@ -43,6 +44,7 @@ export default function QuestionView() {
         </h3>
       </div>
       <QuestionDisplay questionNumber={1} questionHeading={'Quelle est la capitale du Botswana ?'} />
+      <AnswerZone />
     </section>
   );
 }
