@@ -51,3 +51,6 @@ export interface Game {
   gameState: GameState;
   players: Player[];
 }
+
+// background color of the player profile component
+export type PlayerProfileBackground = 'transparent' | 'waiting' | 'red' | 'yellow' | 'green';
