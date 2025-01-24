@@ -11,6 +11,9 @@ type Props = {
 
 /**
  * Display a question from the game
+ *
+ * @param {number} questionNumber - The number of the question
+ * @param {string} questionHeading - The heading of the question
  */
 export default function QuestionDisplay({questionNumber, questionHeading}: Props) {
   return (
