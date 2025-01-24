@@ -1,5 +1,8 @@
 import {useEffect, useState} from 'react';
 import {useGameContext} from '../../providers/GameProvider';
+import PlayerDisplay from '@components/player_display/PlayerDisplay';
+import {vQuestionView_container, vQuestionView_header, vQuestionView_questionCount} from './QuestionView.styles';
+import Timer from '@components/timer/Timer';
 
 /**
  * Display current question
@@ -7,12 +10,12 @@ import {useGameContext} from '../../providers/GameProvider';
 export default function QuestionView() {
   const [timeLeft, setTimeLeft] = useState<number>(30);
 
-  const {setGameState} = useGameContext();
+  const {setGameState, players} = useGameContext();
 
   useEffect(() => {
     // if time left is 0, go to answer view
     if (timeLeft === 0) {
-      setGameState('answer');
+      // setGameState('answer');
       return;
     }
 
@@ -30,9 +33,14 @@ export default function QuestionView() {
   }, [timeLeft, setGameState]);
 
   return (
-    <section>
-      <h1>QuestionView</h1>
-      <h2>{timeLeft} secondes restantes</h2>
+    <section className={vQuestionView_container}>
+      <div className={vQuestionView_header}>
+        <PlayerDisplay player={players[0]} background={'transparent'} />
+        <Timer />
+        <h3 className={vQuestionView_questionCount}>
+          Question <span>x</span>/20
+        </h3>
+      </div>
     </section>
   );
 }
