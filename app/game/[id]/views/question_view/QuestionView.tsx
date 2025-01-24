@@ -3,6 +3,7 @@ import {useGameContext} from '../../providers/GameProvider';
 import PlayerDisplay from '@components/player_display/PlayerDisplay';
 import {vQuestionView_container, vQuestionView_header, vQuestionView_questionCount} from './QuestionView.styles';
 import Timer from '@components/timer/Timer';
+import QuestionDisplay from '../../components/question_display/QuestionDisplay';
 
 /**
  * Display current question
@@ -41,6 +42,7 @@ export default function QuestionView() {
           Question <span>x</span>/20
         </h3>
       </div>
+      <QuestionDisplay questionNumber={1} questionHeading={'Quelle est la capitale du Botswana ?'} />
     </section>
   );
 }
