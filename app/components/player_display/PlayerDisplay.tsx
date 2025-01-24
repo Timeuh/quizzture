@@ -1,9 +1,10 @@
 import {cPlayerDisplay_display, cPlayerDisplay_picture} from '@components/player_display/PlayerDisplay.styles';
-import {Player} from '@utils/types/game';
+import {Player, PlayerProfileBackground} from '@utils/types/game';
 import Image from 'next/image';
 
 type Props = {
   player: Player;
+  background: PlayerProfileBackground;
 };
 
 /**
@@ -11,9 +12,9 @@ type Props = {
  *
  * @param {Player} player : the player to display
  */
-export default function PlayerDisplay({player}: Props) {
+export default function PlayerDisplay({player, background}: Props) {
   return (
-    <div className={cPlayerDisplay_display}>
+    <div className={cPlayerDisplay_display(background)}>
       <Image
         src={player.picture}
         alt={'profile picture'}
