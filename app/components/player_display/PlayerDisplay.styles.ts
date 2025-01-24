@@ -7,6 +7,7 @@ export const cPlayerDisplay_display = (background: PlayerProfileBackground) => {
     bg: background === 'transparent' ? 'none' : 'platinum.700',
     borderRadius: 'md',
     p: 4,
+    ps: background === 'transparent' ? 0 : 4,
     w: '15vw',
     fontSize: 'lg',
   });
