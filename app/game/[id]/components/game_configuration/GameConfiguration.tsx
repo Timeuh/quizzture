@@ -20,26 +20,17 @@ import {
   cGameConfiguration_themesTitle,
 } from './GameConfiguration.styles';
 import GameCategory from '../game_category/GameCategory';
-import Trophy from '@components/icons/Trophy';
-import Map from '@components/icons/Map';
-import Crown from '@components/icons/Crown';
-import Languages from '@components/icons/Languages';
-import Flask from '@components/icons/Flask';
-import Cat from '@components/icons/Cat';
-import Mask from '@components/icons/Mask';
-import BookA from '@components/icons/BookA';
 import Star from '@components/icons/Star';
-import Text from '@components/icons/Text';
-import Music from '@components/icons/Music';
-import Clap from '@components/icons/Clap';
-import Popcorn from '@components/icons/Popcorn';
-import BookMarked from '@components/icons/BookMarked';
-import {GameParameters, GameParametersKey, Gamemode} from '@utils/types/game';
+import {GameParameters, Gamemode} from '@utils/types/game';
 import rules from '@texts/lobby/rules';
 import GameCode from '../game_code/GameCode';
 import Chain from '@components/icons/Chain';
 import {socket} from '@socket';
 import {useGameContext} from '../../providers/GameProvider';
+import useCategories from '@hooks/useCategories';
+import {Category} from '@schemas/categories/categories.schema';
+import iconsArray from '@utils/constants/icons';
+import {CategoryIcon} from '@utils/types/gameLobby';
 
 type Props = {
   gameId: string;
@@ -54,23 +45,11 @@ export default function GameConfiguration({gameId}: Props) {
   const [configuration, setConfiguration] = useState<GameParameters>({
     gameId,
     gamemode: 'three',
-    geography: true,
-    sport: true,
-    history: true,
-    french: true,
-    physics: true,
-    animals: true,
-    anime: true,
-    manga: true,
-    celebrities: true,
-    english: true,
-    music: true,
-    cinema: true,
-    series: true,
-    litteracy: true,
+    categories: [],
   });
 
   const {isHost} = useGameContext();
+  const categoriesQuery = useCategories();
 
   useEffect(() => {
     if (socket.connected) {
@@ -79,7 +58,15 @@ export default function GameConfiguration({gameId}: Props) {
         setConfiguration(gameconf);
       });
     }
-  }, [gameId]);
+
+    if (categoriesQuery.isSuccess) {
+      // load the categories
+      setConfiguration((prev: GameParameters) => {
+        const categories = categoriesQuery.data.items.map((category: Category) => category.id);
+        return {...prev, categories};
+      });
+    }
+  }, [gameId, categoriesQuery.isSuccess]);
 
   /**
    * Change current gamemode
@@ -108,15 +95,20 @@ export default function GameConfiguration({gameId}: Props) {
   };
 
   /**
-   * Update the game configuration for 1 parameter
+   * Update the game configuration for 1 category
    *
-   * @param param {GameParametersKey} : the parameter to update
+   * @param categoryId {Number} : the id of the category to enable/disable
    */
-  const updateConfig = (param: GameParametersKey) => {
+  const updateConfig = (categoryId: Number) => {
     if (!isHost) return;
 
     setConfiguration((prev: GameParameters) => {
-      const newConf = {...prev, [param]: !prev[param]};
+      const newConf = {
+        ...prev,
+        categories: prev.categories.includes(categoryId)
+          ? prev.categories.filter((catId) => catId !== categoryId)
+          : [...prev.categories, categoryId],
+      };
       sendConfig(newConf);
       return newConf;
     });
@@ -172,135 +164,24 @@ export default function GameConfiguration({gameId}: Props) {
       <section className={cGameConfiguration_themesContainer}>
         <h2 className={cGameConfiguration_themesTitle}>Thèmes</h2>
         <section className={cGameConfiguration_themesList}>
-          <GameCategory
-            name='Sport'
-            value={configuration.sport}
-            setValue={() => {
-              updateConfig('sport');
-            }}
-            isFirst
-          >
-            <Trophy className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Géographie'
-            value={configuration.geography}
-            setValue={() => {
-              updateConfig('geography');
-            }}
-          >
-            <Map className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Histoire'
-            value={configuration.history}
-            setValue={() => {
-              updateConfig('history');
-            }}
-          >
-            <Crown className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Français'
-            value={configuration.french}
-            setValue={() => {
-              updateConfig('french');
-            }}
-          >
-            <Languages className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Physique-Chimie'
-            value={configuration.physics}
-            setValue={() => {
-              updateConfig('physics');
-            }}
-            isLastFirstRow
-          >
-            <Flask className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Animaux'
-            value={configuration.animals}
-            setValue={() => {
-              updateConfig('animals');
-            }}
-          >
-            <Cat className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Anime'
-            value={configuration.anime}
-            setValue={() => {
-              updateConfig('anime');
-            }}
-          >
-            <Mask className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Manga'
-            value={configuration.manga}
-            setValue={() => {
-              updateConfig('manga');
-            }}
-          >
-            <BookA className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Célébrités'
-            value={configuration.celebrities}
-            setValue={() => {
-              updateConfig('celebrities');
-            }}
-          >
-            <Star className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Anglais'
-            value={configuration.english}
-            setValue={() => {
-              updateConfig('english');
-            }}
-          >
-            <Text className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Musique'
-            value={configuration.music}
-            setValue={() => {
-              updateConfig('music');
-            }}
-            isFirstLastRow
-          >
-            <Music className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Cinéma'
-            value={configuration.cinema}
-            setValue={() => {
-              updateConfig('cinema');
-            }}
-          >
-            <Clap className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Séries'
-            value={configuration.series}
-            setValue={() => {
-              updateConfig('series');
-            }}
-          >
-            <Popcorn className={cGameConfiguration_icon} />
-          </GameCategory>
-          <GameCategory
-            name='Littérature'
-            value={configuration.litteracy}
-            setValue={() => {
-              updateConfig('litteracy');
-            }}
-          >
-            <BookMarked className={cGameConfiguration_icon} />
-          </GameCategory>
+          {categoriesQuery.data?.items.map((category: Category, index) => {
+            const {id, name} = category;
+            const {Icon} = iconsArray.find((icon: CategoryIcon) => icon.id === id) || {Icon: Star};
+
+            return (
+              <GameCategory
+                key={index}
+                name={name}
+                value={configuration.categories.includes(id)}
+                setValue={() => updateConfig(id)}
+                isFirst={index === 0}
+                isLastFirstRow={index === 4}
+                isFirstLastRow={index === categoriesQuery.data.items.length - 4}
+              >
+                <Icon className={cGameConfiguration_icon} />
+              </GameCategory>
+            );
+          })}
         </section>
       </section>
     </section>
