@@ -1,0 +1,17 @@
+meta {
+  name: create
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:57001/api/categories
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Test"
+  }
+}
