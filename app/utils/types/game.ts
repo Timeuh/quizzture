@@ -34,6 +34,7 @@ export interface Game {
   gameId: string;
   gameState: GameState;
   players: Player[];
+  config: GameParameters;
 }
 
 // background color of the player profile component
