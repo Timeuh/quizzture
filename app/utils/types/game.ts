@@ -1,3 +1,5 @@
+import {Question} from '@schemas/questions/questions.schema';
+
 // possible game modes
 export type Gamemode = 'three' | 'chain';
 
@@ -35,7 +37,14 @@ export interface Game {
   gameState: GameState;
   players: Player[];
   config: GameParameters;
+  questions: GameQuestion[];
 }
 
 // background color of the player profile component
 export type PlayerProfileBackground = 'transparent' | 'waiting' | 'red' | 'yellow' | 'green';
+
+// questions once the game starts
+export interface GameQuestion {
+  question: Question;
+  playerAnswers: string[];
+}
