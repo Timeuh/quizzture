@@ -52,3 +52,9 @@ export interface ApiCollection<T> {
   count: number;
   items: T[];
 }
+
+// draw questions request
+export interface QuestionDraw {
+  quantity: number;
+  categories: number[];
+}
