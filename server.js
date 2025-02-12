@@ -6,6 +6,7 @@ import {handleDisconnection} from './app/utils/functions/sockets/handleDisconnec
 import {handlePlayerListRequest} from './app/utils/functions/sockets/handlePlayerListRequest.js';
 import {handleGameconfChange} from './app/utils/functions/sockets/handleGameconfChange.js';
 import {handleGameStateChange} from './app/utils/functions/sockets/handleGameStateChange.js';
+import {handleGameStart} from './app/utils/functions/sockets/handleGameStart.js';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -42,6 +43,13 @@ app.prepare().then(() => {
     // when the game state changes
     socket.on('change_gamestate', (data) => {
       games = handleGameStateChange(games, data, io, socket);
+    });
+
+    // when the game starts
+    socket.on('start_game', (data) => {
+      handleGameStart(games, data, io).then((newGames) => {
+        games = newGames;
+      });
     });
 
     // when the user leaves the game
