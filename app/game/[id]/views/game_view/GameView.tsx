@@ -33,7 +33,7 @@ export default function GameView({gameId}: Props) {
       return (
         <section className={vGameView_container}>
           <GameConfiguration gameId={gameId} />
-          <PlayerList />
+          <PlayerList gameId={gameId} />
         </section>
       );
 
