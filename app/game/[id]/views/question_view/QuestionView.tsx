@@ -5,6 +5,8 @@ import {vQuestionView_container, vQuestionView_header, vQuestionView_questionCou
 import Timer from '@components/timer/Timer';
 import QuestionDisplay from '../../components/question_display/QuestionDisplay';
 import AnswerZone from '../../components/answer_zone/AnswerZone';
+import {socket} from '@socket';
+import {GameQuestion} from '@utils/types/game';
 
 /**
  * Display current question
@@ -15,6 +17,13 @@ export default function QuestionView() {
   const {setGameState, players} = useGameContext();
 
   useEffect(() => {
+    if (socket.connected) {
+      // receive drawn questions
+      socket.on('receive_questions', (questions: GameQuestion[]) => {
+        console.log(questions);
+      });
+    }
+
     // if time left is 0, go to answer view
     if (timeLeft === 0) {
       // setGameState('answer');
